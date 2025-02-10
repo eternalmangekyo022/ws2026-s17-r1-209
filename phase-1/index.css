@@ -10,6 +10,7 @@
 	box-sizing: border-box;
 	font-size: 16.8px;
 	font-weight: 450;
+	letter-spacing: 0;
 }
 
 body {
@@ -19,7 +20,7 @@ body {
 }
 
 header {
-	height: 6.6rem;
+	height: 6.4rem;
 	width: 100%;
 	background: #0D121F;
 	border-bottom: 2px solid #2A2E3A;
@@ -47,7 +48,7 @@ header>*>* {
 }
 
 .icon-container {
-	width: 35.02%;
+	width: 35%;
 	position: relative;
 }
 
@@ -55,14 +56,14 @@ header>*>* {
 	position: absolute;
 	left: 50%;
 	width: 23.23%;
-	transform: translateY(-1.33%);
+	transform: translateX(9%) translateY(-1.33%);
 }
 
 nav {
 	position: absolute;
-	left: 49.75%;
+	left: 50%;
 	transform: translateX(-60.3%);
-	width: 29.7%;
+	width: 29.4%;
 	display: flex;
 	justify-content: space-between;
 	z-index: 1;
