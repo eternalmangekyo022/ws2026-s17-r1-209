@@ -47,14 +47,15 @@ header>*>* {
 }
 
 .icon-container {
-	width: 35%;
+	width: 35.02%;
 	position: relative;
 }
 
 .icon-container img {
 	position: absolute;
 	left: 50%;
-	width: 23%;
+	width: 23.23%;
+	transform: translateY(-1.33%);
 }
 
 nav {
