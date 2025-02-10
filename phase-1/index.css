@@ -8,7 +8,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-size: 1.05rem;
+	font-size: 16.8px;
 	font-weight: 450;
 }
 
@@ -53,17 +53,18 @@ header>*>* {
 
 .icon-container img {
 	position: absolute;
-	left: 52.4%;
-	width: 24%;
+	left: 50%;
+	width: 23%;
 }
 
 nav {
 	position: absolute;
-	left: 50%;
-	transform: translateX(-56%);
-	width: 30%;
+	left: 49.8%;
+	transform: translateX(-60.3%);
+	width: 29.7%;
 	display: flex;
 	justify-content: space-between;
+	z-index: 1;
 }
 
 a {
@@ -83,18 +84,18 @@ button.login {
 }
 
 .dl-login {
-	width: 30%;
+	width: 37%;
 	justify-content: end;
-	gap: 1.8rem
+	gap: 2.1rem
 }
 
 .dl-login>button {
-	color: #808C9F;
+	color: #a4b2c9;
 }
 
 #login-btn {
 	background-color: #3D81DB;
 	color: white;
-	padding: 1rem 1.5rem;
+	padding: 1.05rem 1.55rem;
 	border-radius: 1.825rem;
 }
