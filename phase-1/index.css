@@ -59,7 +59,7 @@ header>*>* {
 
 nav {
 	position: absolute;
-	left: 49.8%;
+	left: 49.75%;
 	transform: translateX(-60.3%);
 	width: 29.7%;
 	display: flex;
@@ -84,9 +84,9 @@ button.login {
 }
 
 .dl-login {
-	width: 37%;
+	width: 37.6%;
 	justify-content: end;
-	gap: 2.1rem
+	gap: 2.1rem;
 }
 
 .dl-login>button {
@@ -96,6 +96,7 @@ button.login {
 #login-btn {
 	background-color: #3D81DB;
 	color: white;
-	padding: 1.05rem 1.55rem;
+	padding: 1.04rem 1.55rem;
 	border-radius: 1.825rem;
+	transform: translateY(-0.35%);
 }
