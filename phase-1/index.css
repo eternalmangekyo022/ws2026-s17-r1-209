@@ -1,0 +1,100 @@
+@font-face {
+	font-family: plusJakartaSans;
+	src: url(./assets/fonts/PlusJakartaSans-VariableFont_wght.ttf);
+}
+
+* {
+	font-family: plusJakartaSans;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-size: 1.05rem;
+	font-weight: 450;
+}
+
+body {
+	width: 100svw;
+	height: 100svh;
+	overflow-x: none;
+}
+
+header {
+	height: 6.6rem;
+	width: 100%;
+	background: #0D121F;
+	border-bottom: 2px solid #2A2E3A;
+	display: flex;
+	justify-content: center;
+}
+
+.nav-wrapper {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+}
+
+.nav-wrapper>* {
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+
+header>*>* {
+	position: relative;
+	transform: translateX(-25%);
+}
+
+.icon-container {
+	width: 35%;
+	position: relative;
+}
+
+.icon-container img {
+	position: absolute;
+	left: 52.4%;
+	width: 24%;
+}
+
+nav {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-56%);
+	width: 30%;
+	display: flex;
+	justify-content: space-between;
+}
+
+a {
+	text-decoration: none;
+	color: #d5d6d7;
+}
+
+button {
+	cursor: pointer;
+	background: none;
+	border: none;
+	color: white;
+}
+
+button.login {
+	background-color: #3D81DB;
+}
+
+.dl-login {
+	width: 30%;
+	justify-content: end;
+	gap: 1.8rem
+}
+
+.dl-login>button {
+	color: #808C9F;
+}
+
+#login-btn {
+	background-color: #3D81DB;
+	color: white;
+	padding: 1rem 1.5rem;
+	border-radius: 1.825rem;
+}
