@@ -4,9 +4,13 @@
 }
 
 :root {
-	--primary-dark: #131825;
+	--primary-dark: #0D121F;
 	--light-blue: #3D81DB;
 	--light-gray: #97a2b3;
+}
+
+strong {
+	font-weight: 800;
 }
 
 * {
@@ -95,7 +99,7 @@ button {
 }
 
 .dl-login>button {
-	color: #a4b2c9;
+	color: #bdcadf;
 }
 
 #login-btn {
@@ -104,6 +108,7 @@ button {
 	padding: 1.04rem 1.55rem;
 	border-radius: 1.825rem;
 	transform: translateY(-0.35%);
+	font-weight: 500;
 }
 
 main {
@@ -122,8 +127,50 @@ main section {
 }
 
 #about {
+	position: relative;
 	width: 100%;
 	height: 57svh;
+	display: flex;
+	flex-direction: column;
+}
+
+.about-title,
+.about-info {
+	width: 100%;
+	flex: 1;
+}
+
+.about-title {
+	display: flex;
+	flex-direction: column;
+	justify-content: end;
+	align-items: center;
+}
+
+#about h2 {
+	position: relative;
+	color: var(--light-blue);
+	font-size: 1.23rem;
+	font-weight: 600;
+	bottom: 24%;
+}
+
+#about h1 {
+	position: relative;
+	font-size: 2.4rem;
+	font-weight: 790;
+	letter-spacing: 0;
+	bottom: 18.6%;
+}
+
+#about>img {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	scale: 1;
+	top: -1%;
+	object-fit: cover;
 }
 
 #how-it-works {
