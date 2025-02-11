@@ -1,0 +1,1 @@
+this website was made in fullscreen mode(f11) on a 1536x864 screen.
