@@ -3,6 +3,11 @@
 	src: url(./assets/fonts/PlusJakartaSans-VariableFont_wght.ttf);
 }
 
+:root {
+	--primary-dark: #131825;
+	--light-blue: #3D81DB;
+}
+
 * {
 	font-family: plusJakartaSans;
 	margin: 0;
@@ -11,6 +16,7 @@
 	font-size: 16.8px;
 	font-weight: 450;
 	letter-spacing: 0;
+	scroll-behavior: smooth;
 }
 
 body {
@@ -22,7 +28,7 @@ body {
 header {
 	height: 6.4rem;
 	width: 100%;
-	background: #0D121F;
+	background: var(--primary-dark);
 	border-bottom: 2px solid #2A2E3A;
 	display: flex;
 	justify-content: center;
@@ -81,10 +87,6 @@ button {
 	color: white;
 }
 
-button.login {
-	background-color: #3D81DB;
-}
-
 .dl-login {
 	width: 37.6%;
 	justify-content: end;
@@ -96,9 +98,69 @@ button.login {
 }
 
 #login-btn {
-	background-color: #3D81DB;
+	background-color: var(--light-blue);
 	color: white;
 	padding: 1.04rem 1.55rem;
 	border-radius: 1.825rem;
 	transform: translateY(-0.35%);
+}
+
+main {
+	width: 100%;
+	height: fit-content;
+}
+
+.hero {
+	width: 100%;
+	height: 73.55svh;
+	background: var(--primary-dark);
+}
+
+#about {
+	width: 100%;
+	height: 57svh;
+}
+
+#how-it-works {
+	width: 100%;
+	height: 99.6svh;
+	background: var(--primary-dark);
+}
+
+#why-us {
+	width: 100%;
+	height: 78svh;
+}
+
+#download {
+	width: 100%;
+	height: 70.2svh;
+	background: var(--primary-dark);
+}
+
+#locations {
+	width: 100%;
+	height: 86.2svh;
+}
+
+footer {
+	position: relative;
+	width: 100%;
+	height: 18.6svh;
+	background: #0D121F;
+}
+
+.footer-container {
+	width: 82.5%;
+	height: 100%;
+	margin-inline: auto;
+	border-inline: 2px solid #fff;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+footer a {
+	text-decoration: none;
+	color:
 }
