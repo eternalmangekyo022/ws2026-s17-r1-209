@@ -229,7 +229,7 @@ main section {
 
 .hero .title span {
 	position: relative;
-	top: 4%;
+	top: 3.8%;
 	left: .7%;
 	letter-spacing: -1px;
 	font-size: 4.5rem;
@@ -256,8 +256,8 @@ main section {
 
 .hero .info p {
 	position: relative;
-	font-size: 1.3rem;
-	width: 93%;
+	font-size: 1.29rem;
+	width: 97%;
 	line-height: 1.5;
 	color: var(--light-gray);
 	text-align: center;
