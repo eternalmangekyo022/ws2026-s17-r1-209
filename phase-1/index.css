@@ -219,6 +219,7 @@ main section {
 	position: absolute;
 	width: 66vw;
 	height: 63vw;
+	background: #191E2A;
 }
 
 .hero .circle::before {
@@ -240,6 +241,18 @@ main section {
 	right: 0;
 	top: 0;
 	transform: translate(-132.5%, 21.3%);
+}
+
+.hero::before {
+	content: '';
+	width: 70svw;
+	z-index: 1;
+	aspect-ratio: 1/1;
+	position: absolute;
+	left: 50%;
+	transform: translate(-52%, -55%);
+	border-radius: 50%;
+	background: radial-gradient(circle, rgba(255, 255, 255, 0.07) 38%, rgba(255, 255, 255, 0) 70%, transparent)
 }
 
 #about {
@@ -368,6 +381,7 @@ main section {
 	border-radius: 100%;
 	background-color: #3D81DB;
 	color: white;
+	user-select: none;
 	display: flex;
 	justify-content: center;
 	align-items: center;
