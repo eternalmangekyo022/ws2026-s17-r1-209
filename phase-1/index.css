@@ -203,6 +203,68 @@ main section {
 	overflow: hidden;
 }
 
+.hero .title,
+.hero .title span {
+	font-size: 4.55rem;
+	font-weight: 700;
+	color: white;
+	word-spacing: -2px;
+}
+
+.hero>*:not(.circle) {
+	position: absolute;
+	width: 60%;
+	height: 20%;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.hero .title {
+	top: 19.5%;
+	left: 49.5%;
+	letter-spacing: -1px;
+	text-align: center;
+	height: 50%;
+}
+
+.hero .title span {
+	position: relative;
+	top: 4%;
+	left: .7%;
+	letter-spacing: -1px;
+	font-size: 4.5rem;
+	background-image: linear-gradient(180deg, #c3d4ed 0%, #9EB7D9 100%);
+	color: transparent;
+	background-clip: text;
+}
+
+.hero .info {
+	bottom: 19.4%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1.5rem;
+}
+
+.hero .info .links {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1.6rem;
+}
+
+.hero .info p {
+	position: relative;
+	font-size: 1.3rem;
+	width: 93%;
+	line-height: 1.5;
+	color: var(--light-gray);
+	text-align: center;
+	bottom: 7%;
+	letter-spacing: -0.5px;
+}
+
 .circle {
 	position: absolute;
 	border-radius: 100%;
@@ -423,11 +485,6 @@ main section {
 .how-buttons button {
 	padding: 1.05rem 1.6rem;
 }
-
-
-
-
-
 
 #why-us {
 	width: 100%;
