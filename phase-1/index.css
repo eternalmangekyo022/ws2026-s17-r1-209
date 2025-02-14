@@ -518,8 +518,9 @@ main section {
 }
 
 .locations-title h1 {
-	letter-spacing: -1px;
+	letter-spacing: -1.2px;
 	font-size: 2.57rem;
+	font-weight: 710;
 }
 
 .locations-title h2 {
@@ -583,15 +584,18 @@ main section {
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: start;
-	height: 16.9%;
+	height: 17.4%;
 }
 
 #locations .address .address-city {
-	font-size: 1.17rem;
+	font-size: 1.19rem;
+	color: #3D414B;
 }
 
-.address-city {
-	letter-spacing: -0.8px;
+#locations .address .address-street {
+	color: #525559;
+	letter-spacing: -.8px;
+	font-size: 17px;
 }
 
 #locations .card .info {
@@ -606,6 +610,7 @@ main section {
 
 #locations .card strong {
 	font-weight: 800;
+	letter-spacing: -.8px;
 }
 
 #locations button {
