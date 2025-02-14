@@ -498,8 +498,118 @@ main section {
 }
 
 #locations {
+	position: relative;
 	width: 100%;
-	height: 86.2svh;
+	height: 93.1svh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.locations-title {
+	height: 11.7%;
+	width: 30%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 4.3%;
+}
+
+.locations-title h1 {
+	letter-spacing: -1px;
+	font-size: 2.57rem;
+}
+
+.locations-title h2 {
+	font-size: 1.25rem;
+}
+
+.locations-cards {
+	width: 100%;
+	height: 49%;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	gap: 1.6rem;
+	margin-top: 3.7%;
+}
+
+.locations-cards .card-wrapper {
+	position: relative;
+	width: 26.7%;
+	height: 100%;
+	aspect-ratio: 1.2/1;
+	border-radius: .8rem;
+	border: 2px solid #E0E0E0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: border .3s ease-in-out;
+}
+
+.locations-cards .card-wrapper:hover {
+	border: 2px solid #3D81DB;
+}
+
+#locations .card-wrapper .card {
+	position: relative;
+	width: 83.4%;
+	height: 81%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#locations .card>* {
+	width: 100%;
+}
+
+#locations .card dt {
+	font-weight: 700;
+	font-size: 1.18rem;
+	margin-top: 0.13rem;
+	letter-spacing: -0.7px;
+}
+
+#locations .card dd {
+	line-height: 1.5rem;
+}
+
+#locations .address {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: start;
+	height: 16.9%;
+}
+
+#locations .address .address-city {
+	font-size: 1.17rem;
+}
+
+.address-city {
+	letter-spacing: -0.8px;
+}
+
+#locations .card .info {
+	font-size: 1.25rem;
+	font-weight: 600;
+	height: 63%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: start;
+}
+
+#locations .card strong {
+	font-weight: 800;
+}
+
+#locations button {
+	position: absolute;
+	bottom: 8.6%;
 }
 
 footer {
