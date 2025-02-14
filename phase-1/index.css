@@ -229,13 +229,14 @@ main section {
 
 .hero .title span {
 	position: relative;
-	top: 3.8%;
-	left: .7%;
-	letter-spacing: -1px;
-	font-size: 4.5rem;
+	top: 3.3%;
+	left: .8%;
+	letter-spacing: -2px;
+	font-size: 4.6rem;
 	background-image: linear-gradient(180deg, #c3d4ed 0%, #9EB7D9 100%);
 	color: transparent;
 	background-clip: text;
+	word-spacing: 1px;
 }
 
 .hero .info {
