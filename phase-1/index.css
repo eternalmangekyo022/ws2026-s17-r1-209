@@ -204,6 +204,8 @@ main section {
 	height: 79.5svh;
 	background: var(--primary-dark);
 	overflow: hidden;
+	display: flex;
+	justify-content: center;
 }
 
 #hero .title,
@@ -215,17 +217,15 @@ main section {
 }
 
 .fade-in {
+	opacity: 0;
 	animation: 1s forwards fade-in;
 }
 
 p.fade-in {
 	animation-delay: .2s;
-	opacity: 0;
 }
 
-.fade-in.links {
-	opacity: 0;
-	animation: 1s forwards fade-in-links;
+.links.fade-in {
 	animation-delay: .4s;
 }
 
@@ -239,30 +239,19 @@ p.fade-in {
 @keyframes fade-in {
 	0% {
 		opacity: 0;
-		transform: translate(-50%, -.7rem);
+		transform: translateY(-.7rem);
 	}
 
 	100% {
 		opacity: 1;
-		transform: translate(-50%, 0%);
-	}
-}
-
-@keyframes fade-in-links {
-	0% {
-		opacity: 0;
-		transform: translate(-118%, -.7rem);
-	}
-
-	100% {
-		opacity: 1;
-		transform: translate(-118%, 0%);
+		transform: translateY(0%);
 	}
 }
 
 #hero .title {
+	position: relative;
+	left: -0.5%;
 	top: 19.5%;
-	left: 49.5%;
 	letter-spacing: -1.9px;
 	text-align: center;
 	height: 50%;
@@ -291,6 +280,7 @@ p.fade-in {
 	justify-content: center;
 	align-items: center;
 	gap: 1.5rem;
+	transform: translateX(-50%);
 }
 
 #hero .info .links {
@@ -298,7 +288,6 @@ p.fade-in {
 	justify-content: center;
 	align-items: center;
 	gap: 1.6rem;
-	transform: translateX(-118%);
 }
 
 #hero .info p {
@@ -480,6 +469,54 @@ p.fade-in {
 	border-radius: 8%;
 }
 
+.how-showcase .card:nth-child(2):hover svg.dash {
+	stroke-dasharray: 1000;
+	stroke-dashoffset: 1000;
+	animation: infinite-dash 5s linear forwards;
+}
+
+@keyframes infinite-dash {
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+
+.how-showcase .card:nth-child(3):hover svg.rotate>#rotate-path {
+	animation: rotate-svg 1.3s infinite linear;
+	transform-origin: 50% 55%;
+}
+
+@keyframes rotate-svg {
+	to {
+		rotate: 360deg;
+	}
+}
+
+
+
+.how-showcase .card:nth-child(3)>svg,
+.how-showcase .card:nth-child(3)>button {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.how-showcase .card:nth-child(3)>svg {
+	top: 23%;
+}
+
+.how-showcase .card:nth-child(3)>button {
+	bottom: 13%;
+}
+
+.card .dummy-button {
+	width: 43%;
+	height: .9rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 .card .card-number {
 	position: absolute;
 	left: 0;
@@ -540,7 +577,7 @@ p.fade-in {
 
 #why-us>* {
 	width: 51%;
-	height: 50.7%;
+	height: 50.2%;
 	margin-inline: auto;
 	text-align: center;
 }
@@ -576,11 +613,11 @@ p.fade-in {
 	left: 5.5%;
 	display: grid;
 	width: 62%;
-	height: 27.7%;
+	height: 37.9%;
 	grid-template-columns: repeat(2, 1fr);
 	grid-template-rows: repeat(2, 1fr);
 	column-gap: 4.5rem;
-	row-gap: 3.1rem;
+	row-gap: 0.6rem;
 }
 
 .why-reasons h1 {
@@ -593,7 +630,7 @@ p.fade-in {
 	font-size: 1.03rem;
 	text-align: start;
 	width: 84.8%;
-	line-height: 1.5rem;
+	line-height: 1.55rem;
 	letter-spacing: -0.4px;
 }
 
@@ -603,13 +640,18 @@ p.fade-in {
 	flex-direction: column;
 	justify-content: start;
 	align-items: start;
-	gap: 16%;
+	gap: 9.9%;
+}
+
+.why-reasons .reason:hover .reason-image {
+	zoom: 1.2;
+	transform-origin: center;
 }
 
 .why-reasons>.reason>.reason-image {
 	position: absolute;
 	left: -19.9%;
-	top: 55%;
+	top: 37%;
 	width: 3.25rem;
 	aspect-ratio: 1/1;
 	border-radius: 0.8rem;
@@ -618,10 +660,11 @@ p.fade-in {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	transition: .3s;
 }
 
 .reason-image>img {
-	width: 47%;
+	width: 48%;
 }
 
 #download {
@@ -751,11 +794,12 @@ p.fade-in {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	transition: border .3s ease-in-out;
+	box-sizing: border-box;
+	transition: border-color .3s ease-in-out, border-width .1s ease-in-out;
 }
 
 .locations-cards .card-wrapper:hover {
-	border: 2px solid #3D81DB;
+	border: 1.5px solid #3D81DB;
 }
 
 #locations .card-wrapper .card {
