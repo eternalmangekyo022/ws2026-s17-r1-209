@@ -1,25 +1,12 @@
+import Header from './components/Header';
+import { useRef } from 'react'
+
 export default function App() {
+  const articleRef = useRef<HTMLElement>(null);
   return (
     <>
-      <article className="container">
-      <header className="header">
-        <h1>Register a new location</h1>
-        <div className="steps">
-          <button className="step done">
-            <img src="./assets/check.svg" alt="Check" />
-          </button>
-          <div className="step-divider"></div>
-          <button className="step done">2</button>
-          <div className="step-divider"></div>
-          <button className="step current">3</button>
-          <div className="step-divider dashed"></div>
-          <button className="step" disabled>4</button>
-        </div>
-
-        <button className="fullscreen-btn">
-          <img src="./assets/maximize.svg" alt="Maximize" />
-        </button>
-      </header>
+      <article className="container" ref={articleRef}>
+      <Header articleRef={articleRef}/>
 
       <main className="main">
         <div className="input-row">
