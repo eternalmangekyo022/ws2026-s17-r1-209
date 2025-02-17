@@ -192,6 +192,10 @@ body {
   width: 350px;
 }
 
+.input-group:has(.short) {
+  width: 130px;
+}
+
 .input-group input,
 .input-group textarea,
 .input-group select {
