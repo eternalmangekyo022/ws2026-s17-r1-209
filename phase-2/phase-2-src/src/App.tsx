@@ -1,5 +1,7 @@
 import Header from './components/Header';
 import { useRef } from 'react'
+import HeaderContext from './context/header.ts'
+import Input from './components/Input.tsx';
 
 export default function App() {
   const articleRef = useRef<HTMLElement>(null);
@@ -10,16 +12,9 @@ export default function App() {
 
       <main className="main">
         <div className="input-row">
-          <div className="input-group">
-            <label htmlFor="input-1">Input</label>
-            <input type="text" id="input-1" placeholder="Input placeholder" />
-          </div>
+          <Input rules={{ isNum: false, length: [0, 10]}} validate={() => {}} />
 
-          <div className="input-group">
-            <label htmlFor="input-2">Input Error</label>
-            <input type="text" id="input-2" className="error" />
-            <span className="input-error">This field is required</span>
-          </div>
+
         </div>
 
         <div className="input-group">
