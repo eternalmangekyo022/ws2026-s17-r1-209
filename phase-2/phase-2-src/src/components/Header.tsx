@@ -5,9 +5,10 @@ import { useState } from 'react'
 
 type Props = {
 	articleRef: React.RefObject<HTMLElement | null>
+  page: number
 }
 
-export default function Header({ articleRef }: Props) {
+export default function Header({ articleRef, page }: Props) {
 	const [fullScreen, setFullScreen] = useState(false);
 
 	function toggleFullScreen(): void {

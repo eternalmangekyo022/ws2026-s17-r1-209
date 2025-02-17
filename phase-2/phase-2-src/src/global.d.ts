@@ -2,7 +2,7 @@ export {};
 
 declare global {
   interface IInputRule {
-    isNum: boolean;
+    isNum?: boolean;
     length: [number, number];
   }
 }

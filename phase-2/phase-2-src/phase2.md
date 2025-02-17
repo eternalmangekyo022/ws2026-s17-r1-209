@@ -35,12 +35,7 @@ The header includes the form **title**, a **fullscreen** button in the top-right
 
 ### 2.2 Footer
 
-The footer contains two buttons:
-
-- **Back Button:** Navigates to the previous step and is disabled on the first step.
-- **Next Button:** Navigates to the next step, triggering validation. If validation errors exist, navigation is blocked, and error messages are displayed. More about validation later.
-
-The footer should be hidden on the fourth step.
+- **Next Button:** triggering validation. If validation errors exist, navigation is blocked, and error messages are displayed. More about validation later.
 
 Navigating back and forth should persist the filled data.
 
@@ -50,11 +45,7 @@ Collect key details about the new laundromat location.
 
 #### 2.3.1 Fields and their validations
 
-- **Name:** Text input, required, 3-32 characters.
-- **Description:** Textarea, required, 10-256 characters.
-- **Postal Code:** Text input, required, exactly 4 numeric characters.
-- **City:** Text input, required, 3-32 characters.
-- **Address:** Text input, required, 5-128 characters.
+
 - **Open At:** Dropdown with options: `Every Day`, `Weekdays`, `Weekends` (default: `Every Day`)
 - **Opening Hours (From and To):** Text input with `hh:mm` **input mask**, both fields required.
 

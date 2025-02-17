@@ -1,26 +1,39 @@
 import Header from './components/Header';
-import { useRef } from 'react'
+import { useRef, useReducer, useState } from 'react'
 import HeaderContext from './context/header.ts'
-import Input from './components/Input.tsx';
+
+import RegisterContext from './context/register';
+
+import Register from './pages/Register';
 
 export default function App() {
   const articleRef = useRef<HTMLElement>(null);
+  const [page, dispatch] = useReducer(pageReducer, 1)
+  const [error, setError] = useState(false);
+	const [validate, setValidate] = useState(false);
+
+  
+
+  function pageReducer(state: number, action: { type: 'increment' | 'decrement' }) {
+    switch(action.type) {
+      case 'increment':
+        return state === 4 ? state: state + 1
+      case 'decrement':
+        return state === 1 ? state: state - 1
+      default:
+        throw new Error('error')
+    }
+  }
+
   return (
     <>
       <article className="container" ref={articleRef}>
-      <Header articleRef={articleRef}/>
+      <Header page={page} articleRef={articleRef}/>
 
       <main className="main">
-        <div className="input-row">
-          <Input rules={{ isNum: false, length: [0, 10]}} validate={() => {}} />
-
-
-        </div>
-
-        <div className="input-group">
-          <label htmlFor="textarea">Textarea</label>
-          <textarea id="textarea" rows={5}></textarea>
-        </div>
+        <RegisterContext.Provider value={{ error, setError, validate, setValidate }}>
+          <Register />
+        </RegisterContext.Provider>
 
         <h2>Subtitle inside the form</h2>
 
@@ -129,10 +142,16 @@ export default function App() {
         </div>
       </main>
 
-      <footer className="footer">
-        <button className="btn" disabled>Back</button>
-        <button className="btn">Next</button>
-      </footer>
+      {page < 4 &&
+        <footer className="footer">
+          <button onClick={() => dispatch({ type: 'decrement' })} className="btn" disabled={page === 1}>Back</button>
+
+          
+          <button onClick={() => {
+            setValidate(true)
+          }} className="btn" disabled={page === 4}>Next</button>
+        </footer>
+      }
     </article>
     </>
   )
