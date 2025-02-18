@@ -10,8 +10,7 @@ type Props = {
 export default function TimeInput({ labelText, id }: Props) {
   const [error, setError] = useState("");
   const { fromRef, toRef } = useContext(TimeContext);
-  const { dispatchError, validate, setValidate, errors } =
-    useContext(RegisterContext);
+  const { validate, setValidate, errors } = useContext(RegisterContext);
 
   function validateTimes(_smaller: string, _bigger: string): boolean {
     const [smh, smm]: number[] = _smaller.split(":").map(Number);
@@ -52,7 +51,8 @@ export default function TimeInput({ labelText, id }: Props) {
         setError("");
         setValidate(true);
       }
-    } else if (errors.includes(6) || errors.includes(7)) setValidate(true);
+    } else if (errors.current.includes(6) || errors.current.includes(7))
+      setValidate(true);
   }
 
   useEffect(() => {
@@ -60,8 +60,10 @@ export default function TimeInput({ labelText, id }: Props) {
       validateInput().then((validated) => {
         setError(validated);
         setValidate(false);
-        dispatchError({ type: validated ? "add" : "remove", payload: id });
-        if (validated && Math.min(...errors) === id)
+        if (validated) {
+          errors.current = Array.from(new Set([...errors.current, id]));
+        } else errors.current = errors.current.filter((i) => i !== id);
+        if (validated && Math.min(...errors.current) === id)
           (id === 6 ? fromRef : toRef).current?.focus();
       });
     }

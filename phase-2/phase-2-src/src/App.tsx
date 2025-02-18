@@ -10,22 +10,9 @@ export default function App() {
   const articleRef = useRef<HTMLElement>(null);
   const [page, dispatchPage] = useReducer(pageReducer, 1);
   //add id of input if error occurs in input
-  const [errors, dispatchError] = useReducer(errorsReducer, []);
+  const errors = useRef<number[]>([]);
+  const [shouldFocus, setShouldFocus] = useState(0);
   const [validate, setValidate] = useState(false);
-
-  function errorsReducer(
-    state: number[],
-    action: { type: "add" | "remove"; payload: number }
-  ): number[] {
-    switch (action.type) {
-      case "add":
-        return Array.from(new Set([...state, action.payload]));
-      case "remove":
-        return state.filter((i) => i !== action.payload);
-      default:
-        return state;
-    }
-  }
 
   function pageReducer(
     state: number,
@@ -48,7 +35,7 @@ export default function App() {
 
         <main className="main">
           <RegisterContext.Provider
-            value={{ errors, dispatchError, validate, setValidate }}
+            value={{ shouldFocus, errors, validate, setValidate }}
           >
             <Register />
           </RegisterContext.Provider>
@@ -164,8 +151,10 @@ export default function App() {
 
             <button
               onClick={() => {
-                console.log(validate);
                 setValidate(true);
+                console.log(errors.current);
+                if (errors.current.length)
+                  setShouldFocus(Math.min(...errors.current));
               }}
               className="btn"
               disabled={page === 4}

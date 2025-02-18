@@ -7,22 +7,12 @@ import {
 } from "react";
 import RegisterContext from "../context/register";
 
-type ITextArea = BaseProps & {
-  textArea: boolean;
-  id?: number;
-};
-
-type INonTextArea = BaseProps & {
-  textArea?: boolean;
-  id: number;
-};
-
-type BaseProps = {
+type Props = {
   rules: IInputRule;
   labelText: string;
+  id: number;
+  textArea?: boolean;
 };
-
-type Props = ITextArea | INonTextArea;
 
 export default function Input({
   labelText,
@@ -41,7 +31,7 @@ export default function Input({
         : HTMLInputElement
     >(null);
   const [error, setError] = useState("");
-  const { dispatchError, validate, setValidate, errors } =
+  const { validate, setValidate, errors, shouldFocus } =
     useContext(RegisterContext);
 
   async function handleOnChange(
@@ -62,11 +52,14 @@ export default function Input({
       setError(validated);
       setValidate(false);
     }
-    dispatchError({
-      type: validated ? "add" : "remove",
-      payload: id as number,
-    });
   }
+
+  const addError = () => {
+    errors.current = Array.from(new Set([...errors.current, id]));
+  };
+  const removeError = () => {
+    errors.current = errors.current.filter((i) => i !== id);
+  };
 
   useEffect(() => {
     if (validate) forceValidate();
@@ -91,11 +84,18 @@ export default function Input({
 
     const checked = check();
 
-    console.log(Math.min(...errors), id);
-    if (checked && Math.min(...errors) === id) inputRef.current?.focus();
+    if (checked) addError();
+    else removeError();
 
     return checked;
   }
+
+  useEffect(() => {
+    console.log(shouldFocus);
+    if (shouldFocus === id) inputRef.current?.focus();
+  }, [id, shouldFocus]);
+
+  useEffect(() => addError(), []);
 
   return textArea ? (
     <div className="input-group">
