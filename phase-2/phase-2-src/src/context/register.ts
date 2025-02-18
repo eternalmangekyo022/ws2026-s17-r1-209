@@ -4,7 +4,7 @@ export default createContext({
   errors: {
     current: [],
   },
-  shouldFocus: 0,
+  shouldFocus: { id: 0 },
   validate: false,
   setValidate: () => {},
 } as {
@@ -13,5 +13,5 @@ export default createContext({
   };
   validate: boolean;
   setValidate: React.Dispatch<React.SetStateAction<boolean>>;
-  shouldFocus: number;
+  shouldFocus: { id: number };
 });

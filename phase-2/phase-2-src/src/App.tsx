@@ -11,7 +11,7 @@ export default function App() {
   const [page, dispatchPage] = useReducer(pageReducer, 1);
   //add id of input if error occurs in input
   const errors = useRef<number[]>([]);
-  const [shouldFocus, setShouldFocus] = useState(0);
+  const [shouldFocus, setShouldFocus] = useState({ id: 0 });
   const [validate, setValidate] = useState(false);
 
   function pageReducer(
@@ -154,7 +154,7 @@ export default function App() {
                 setValidate(true);
                 console.log(errors.current);
                 if (errors.current.length)
-                  setShouldFocus(Math.min(...errors.current));
+                  setShouldFocus({ id: Math.min(...errors.current) });
               }}
               className="btn"
               disabled={page === 4}

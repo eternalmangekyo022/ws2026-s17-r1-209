@@ -43,7 +43,8 @@ export default function Input({
     if (inputVal.length > max) e.preventDefault();
     else setInput(inputVal);
 
-    if (error) setError(await validateInput(inputVal));
+    const validated = await validateInput(inputVal);
+    if (error) setError(validated);
   }
 
   async function forceValidate() {
@@ -92,7 +93,7 @@ export default function Input({
 
   useEffect(() => {
     console.log(shouldFocus);
-    if (shouldFocus === id) inputRef.current?.focus();
+    if (shouldFocus.id === id) inputRef.current?.focus();
   }, [id, shouldFocus]);
 
   useEffect(() => addError(), []);
