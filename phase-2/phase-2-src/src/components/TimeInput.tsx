@@ -36,7 +36,6 @@ export default function TimeInput({ labelText, id }: Props) {
         ? fromRef.current.value
         : toRef.current.value;
 
-    console.log(`validating ${toCheck}`);
     if (!toCheck) return "Field required";
     else if (
       id === 6 &&
@@ -48,7 +47,6 @@ export default function TimeInput({ labelText, id }: Props) {
 
   async function handleOnChange(currentVal: string) {
     if (error) {
-      console.log(currentVal);
       const validated = await validateInput(currentVal);
       if (!validated) {
         setError("");
@@ -63,6 +61,8 @@ export default function TimeInput({ labelText, id }: Props) {
         setError(validated);
         setValidate(false);
         dispatchError({ type: validated ? "add" : "remove", payload: id });
+        if (validated && Math.min(...errors) === id)
+          (id === 6 ? fromRef : toRef).current?.focus();
       });
     }
   }, [validate]);

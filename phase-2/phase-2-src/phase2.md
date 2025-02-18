@@ -39,19 +39,9 @@ The header includes the form **title**, a **fullscreen** button in the top-right
 
 Navigating back and forth should persist the filled data.
 
-### 2.3 Step 1: General Information
-
-Collect key details about the new laundromat location.
-
 #### 2.3.1 Fields and their validations
 
-
-- **Open At:** Dropdown with options: `Every Day`, `Weekdays`, `Weekends` (default: `Every Day`)
-- **Opening Hours (From and To):** Text input with `hh:mm` **input mask**, both fields required.
-
 Please create the layout of the inputs as it is in the video.
-
-Also, disable autocomplete on the fields for a cleaner user experience.
 
 #### 2.3.2 Validation
 

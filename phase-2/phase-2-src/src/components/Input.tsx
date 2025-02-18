@@ -1,4 +1,10 @@
-import { type ChangeEvent, useState, useContext, useEffect } from "react";
+import {
+  type ChangeEvent,
+  useState,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 import RegisterContext from "../context/register";
 
 type ITextArea = BaseProps & {
@@ -28,8 +34,15 @@ export default function Input({
   },
 }: Props) {
   const [input, setInput] = useState("");
+  const inputRef =
+    useRef<
+      Props extends { textArea: boolean }
+        ? HTMLTextAreaElement
+        : HTMLInputElement
+    >(null);
   const [error, setError] = useState("");
-  const { dispatchError, validate, setValidate } = useContext(RegisterContext);
+  const { dispatchError, validate, setValidate, errors } =
+    useContext(RegisterContext);
 
   async function handleOnChange(
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -46,7 +59,6 @@ export default function Input({
   async function forceValidate() {
     const validated = await validateInput(input);
     if (validated) {
-      console.log(validated);
       setError(validated);
       setValidate(false);
     }
@@ -61,19 +73,28 @@ export default function Input({
   }, [validate]);
 
   async function validateInput(input: string): Promise<string> {
-    if (!input.trim()) return "Required";
-    else if (input.length < min) return "Input is shorter than expected";
-    else if (!isNum && input.length > max)
-      return "Input is longer than expected";
-    else if (isNum) {
-      const number = "123456789";
-      for (let i = 0; i < input.length; i++) {
-        if (!number.includes(input[i])) {
-          return "Input is not a number";
+    function check(): string {
+      if (!input.trim()) return "Required";
+      else if (input.length < min) return "Input is shorter than expected";
+      else if (!isNum && input.length > max)
+        return "Input is longer than expected";
+      else if (isNum) {
+        const number = "123456789";
+        for (let i = 0; i < input.length; i++) {
+          if (!number.includes(input[i])) {
+            return "Input is not a number";
+          }
         }
-      }
-      return "";
-    } else return "";
+        return "";
+      } else return "";
+    }
+
+    const checked = check();
+
+    console.log(Math.min(...errors), id);
+    if (checked && Math.min(...errors) === id) inputRef.current?.focus();
+
+    return checked;
   }
 
   return textArea ? (
@@ -84,6 +105,7 @@ export default function Input({
         className={error ? "error" : ""}
         id="textarea"
         value={input}
+        ref={inputRef as React.Ref<HTMLTextAreaElement>}
         onChange={handleOnChange}
         rows={5}
       ></textarea>
@@ -96,6 +118,7 @@ export default function Input({
         autoComplete="off"
         onChange={handleOnChange}
         value={input}
+        ref={inputRef}
         type="text"
         id={`input-${id}`}
         className={`${error ? "error" : ""}${id === 2 ? " short" : ""}`}
