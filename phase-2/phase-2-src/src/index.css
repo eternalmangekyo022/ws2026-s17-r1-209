@@ -196,6 +196,14 @@ body {
   width: 130px;
 }
 
+input[type=time]::-webkit-datetime-edit-ampm-field {
+  display: none;
+}
+
+input[type=time]::-moz-datetime-edit {
+  display: none;
+}
+
 .input-group input,
 .input-group textarea,
 .input-group select {

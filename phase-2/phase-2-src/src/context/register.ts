@@ -1,13 +1,20 @@
 import { createContext } from "react";
 
 export default createContext({
-  error: false,
-  setError: () => {},
+  errors: [],
+  dispatchError: () => {},
   validate: false,
   setValidate: () => {},
 } as {
-  error: boolean;
-  setError: React.Dispatch<React.SetStateAction<boolean>>;
+  errors: number[];
+  dispatchError: React.ActionDispatch<
+    [
+      action: {
+        type: "add" | "remove";
+        payload: number;
+      }
+    ]
+  >;
   validate: boolean;
   setValidate: React.Dispatch<React.SetStateAction<boolean>>;
 });
