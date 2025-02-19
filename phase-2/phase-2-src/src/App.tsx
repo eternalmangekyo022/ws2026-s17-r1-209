@@ -4,10 +4,11 @@ import { useReducer, useState, useRef } from "react";
 
 import RegisterContext from "./context/register";
 import Register from "./pages/Register";
+import Layout from "./pages/Layout";
 
 export default function App() {
   const articleRef = useRef<HTMLElement>(null);
-  const [page, dispatchPage] = useReducer(pageReducer, 1);
+  const [page, dispatchPage] = useReducer(pageReducer, 2);
   const [form, dispatchForm] = useReducer(formReducer, {
     address: "",
     city: "",
@@ -65,6 +66,12 @@ export default function App() {
             </RegisterContext.Provider>
           )}
 
+          {page === 2 && (
+            <>
+              <Layout />
+            </>
+          )}
+
           <label className="cnr-label">
             <input type="checkbox" />
             <span>Checkbox 1</span>
@@ -88,69 +95,6 @@ export default function App() {
           </div>
 
           <hr />
-
-          <div className="dnd-row">
-            <div className="grid-item washer">
-              <img src="./assets/washing-machine.svg" alt="Washing Machine" />
-              <span>Washer (11 kg)</span>
-            </div>
-            <div className="grid-item dryer">
-              <img src="./assets/washing-machine.svg" alt="Drying Machine" />
-              <span>Dryer (25 kg)</span>
-            </div>
-            <div className="grid-item">
-              <img src="./assets/armchair.svg" alt="Waiting Area" />
-              <span>Waiting Area</span>
-            </div>
-            <div className="grid-item">
-              <img src="./assets/space.svg" alt="Folding Tables" />
-              <span>Folding Table</span>
-            </div>
-          </div>
-
-          <div className="grid">
-            <div className="grid-item empty"></div>
-            <div className="grid-item wall">
-              <span>Wall</span>
-            </div>
-            <div className="grid-item washer">
-              <img src="./assets/washing-machine.svg" alt="Washing Machine" />
-              <span>Washer (11 kg)</span>
-            </div>
-            <div className="grid-item dryer">
-              <img src="./assets/washing-machine.svg" alt="Drying Machine" />
-              <span>Dryer (25 kg)</span>
-            </div>
-            <div className="grid-item dryer">
-              <img src="./assets/washing-machine.svg" alt="Drying Machine" />
-              <span>Dryer (25 kg)</span>
-            </div>
-            <div className="grid-item entrance"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-            <div className="grid-item empty"></div>
-          </div>
 
           <hr />
 

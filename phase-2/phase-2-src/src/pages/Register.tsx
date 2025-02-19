@@ -1,6 +1,7 @@
 import Input from "../components/Input";
 import TimeInput from "../components/TimeInput";
 import OpenTimeContext from "../context/opentime";
+import Select from "../components/Select";
 import { useRef } from "react";
 
 export default function Register() {
@@ -9,6 +10,7 @@ export default function Register() {
 
   return (
     <>
+      <h1>Information about the Location</h1>
       <Input name="name" labelText="Name" id={1} rules={{ length: [3, 32] }} />
       <Input
         name="description"
@@ -37,20 +39,9 @@ export default function Register() {
           rules={{ length: [5, 128] }}
         />
       </div>
-      <div className="input-group">
-        <label htmlFor="select">Open at</label>
-        <select id="select">
-          <option value="1" defaultChecked>
-            Every Day
-          </option>
-          <option value="2">Weekdays</option>
-          <option value="3">Weekend</option>
-        </select>
-      </div>
+      <Select />
       <hr />
-
       <h2>Operational hours</h2>
-
       <div className="input-row">
         <OpenTimeContext.Provider value={{ fromRef, toRef }}>
           <TimeInput name="from" id={6} labelText="From" />
