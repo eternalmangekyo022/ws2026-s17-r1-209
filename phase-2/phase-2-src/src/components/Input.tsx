@@ -99,7 +99,9 @@ export default function Input({
     if (shouldFocus.id === id) inputRef.current?.focus();
   }, [id, shouldFocus]);
 
-  useEffect(() => addError(), []);
+  useEffect(() => {
+    if (form[name].trim() === "") addError();
+  }, []);
 
   return textArea ? (
     <div className="input-group">
