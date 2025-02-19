@@ -3,14 +3,23 @@ import { useReducer, useState, useRef } from "react";
 //import HeaderContext from "./context/header.ts";
 
 import RegisterContext from "./context/register";
-
 import Register from "./pages/Register";
 
 export default function App() {
   const articleRef = useRef<HTMLElement>(null);
   const [page, dispatchPage] = useReducer(pageReducer, 1);
+  const [form, dispatchForm] = useReducer(formReducer, {
+    address: "",
+    city: "",
+    description: "",
+    from: "",
+    to: "",
+    name: "",
+    openAt: "everyday",
+    postalCode: "",
+  });
   //add id of input if error occurs in input
-  const errors = useRef<number[]>([]);
+  const errors = useRef<{ id: number; name: keyof IFormState }[]>([]);
   const [shouldFocus, setShouldFocus] = useState({ id: 0 });
   const [validate, setValidate] = useState(false);
 
@@ -28,21 +37,33 @@ export default function App() {
     }
   }
 
+  function formReducer(
+    state: IFormState,
+    action: { type: keyof IFormState; payload: string }
+  ) {
+    return { ...state, [action.type]: action.payload };
+  }
+
   return (
     <>
       <article className="container" ref={articleRef}>
         <Header page={page} articleRef={articleRef} />
 
         <main className="main">
-          <RegisterContext.Provider
-            value={{ shouldFocus, errors, validate, setValidate }}
-          >
-            <Register />
-          </RegisterContext.Provider>
-
-          <h2>Operational hours</h2>
-
-          <hr />
+          {page === 1 && (
+            <RegisterContext.Provider
+              value={{
+                form,
+                dispatchForm,
+                shouldFocus,
+                errors,
+                validate,
+                setValidate,
+              }}
+            >
+              <Register />
+            </RegisterContext.Provider>
+          )}
 
           <label className="cnr-label">
             <input type="checkbox" />
@@ -152,9 +173,11 @@ export default function App() {
             <button
               onClick={() => {
                 setValidate(true);
-                console.log(errors.current);
-                if (errors.current.length)
-                  setShouldFocus({ id: Math.min(...errors.current) });
+                if (errors.current.length) {
+                  setShouldFocus({
+                    id: Math.min(...errors.current.map((i) => i.id)),
+                  });
+                } else dispatchPage({ type: "increment" });
               }}
               className="btn"
               disabled={page === 4}

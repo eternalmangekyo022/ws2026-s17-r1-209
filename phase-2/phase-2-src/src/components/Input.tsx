@@ -11,6 +11,7 @@ type Props = {
   rules: IInputRule;
   labelText: string;
   id: number;
+  name: keyof IFormState;
   textArea?: boolean;
 };
 
@@ -18,12 +19,12 @@ export default function Input({
   labelText,
   textArea,
   id,
+  name,
   rules: {
     isNum = false,
     length: [min, max],
   },
 }: Props) {
-  const [input, setInput] = useState("");
   const inputRef =
     useRef<
       Props extends { textArea: boolean }
@@ -31,7 +32,7 @@ export default function Input({
         : HTMLInputElement
     >(null);
   const [error, setError] = useState("");
-  const { validate, setValidate, errors, shouldFocus } =
+  const { validate, setValidate, errors, shouldFocus, dispatchForm, form } =
     useContext(RegisterContext);
 
   async function handleOnChange(
@@ -41,14 +42,14 @@ export default function Input({
       target: { value: inputVal },
     } = e;
     if (inputVal.length > max) e.preventDefault();
-    else setInput(inputVal);
+    else dispatchForm({ type: name, payload: inputVal });
 
     const validated = await validateInput(inputVal);
     if (error) setError(validated);
   }
 
   async function forceValidate() {
-    const validated = await validateInput(input);
+    const validated = await validateInput(form[name]);
     if (validated) {
       setError(validated);
       setValidate(false);
@@ -56,10 +57,13 @@ export default function Input({
   }
 
   const addError = () => {
-    errors.current = Array.from(new Set([...errors.current, id]));
+    const ids = errors.current.map((i) => i.id);
+    if (!ids.includes(id)) {
+      errors.current = [...errors.current, { id, name }];
+    }
   };
   const removeError = () => {
-    errors.current = errors.current.filter((i) => i !== id);
+    errors.current = errors.current.filter((i) => i.id !== id);
   };
 
   useEffect(() => {
@@ -68,7 +72,7 @@ export default function Input({
 
   async function validateInput(input: string): Promise<string> {
     function check(): string {
-      if (!input.trim()) return "Required";
+      if (!input.trim()) return "Field required";
       else if (input.length < min) return "Input is shorter than expected";
       else if (!isNum && input.length > max)
         return "Input is longer than expected";
@@ -92,7 +96,6 @@ export default function Input({
   }
 
   useEffect(() => {
-    console.log(shouldFocus);
     if (shouldFocus.id === id) inputRef.current?.focus();
   }, [id, shouldFocus]);
 
@@ -105,7 +108,7 @@ export default function Input({
         autoComplete="off"
         className={error ? "error" : ""}
         id="textarea"
-        value={input}
+        value={form[name]}
         ref={inputRef as React.Ref<HTMLTextAreaElement>}
         onChange={handleOnChange}
         rows={5}
@@ -118,7 +121,7 @@ export default function Input({
       <input
         autoComplete="off"
         onChange={handleOnChange}
-        value={input}
+        value={form[name]}
         ref={inputRef}
         type="text"
         id={`input-${id}`}
