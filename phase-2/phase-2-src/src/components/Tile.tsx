@@ -5,7 +5,8 @@ import { useContext, useState, useEffect } from "react";
 import LayoutContext from "../context/layout";
 
 export default function Tile({ type, weight, id, pos = { x: 0, y: 0 } }: Tile) {
-  const { tiles, dispatchTiles } = useContext(LayoutContext);
+  const { tiles, dispatchTiles, dragging, setDragging } =
+    useContext(LayoutContext);
 
   const [image, setImage] = useState<{ img: string | null; alt: string }>({
     img: null,
@@ -15,13 +16,13 @@ export default function Tile({ type, weight, id, pos = { x: 0, y: 0 } }: Tile) {
   function getImage(): { img: string | null; alt: string } {
     switch (type) {
       case "dryer":
-        return { img: Machine, alt: "Washing Machine" };
+        return { img: Machine, alt: "Dryer" };
       case "washer":
-        return { img: Machine, alt: "" };
+        return { img: Machine, alt: "Washing Machine" };
       case "table":
-        return { img: Table, alt: "" };
+        return { img: Table, alt: "Folding Table" };
       case "waiting":
-        return { img: Waiting, alt: "" };
+        return { img: Waiting, alt: "Waiting Area" };
       default:
         return { img: null, alt: "" };
     }
@@ -44,7 +45,32 @@ export default function Tile({ type, weight, id, pos = { x: 0, y: 0 } }: Tile) {
   }
 
   function handleDragStart() {
-    dispatchTiles({ type: "" });
+    setDragging({
+      id,
+      type,
+      pos,
+      weight,
+    });
+  }
+
+  function handleDragStop() {
+    setDragging(null);
+  }
+
+  function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
+    if (id.includes("rows")) return;
+    e.preventDefault();
+  }
+
+  function handleDrop(e: React.DragEvent<HTMLDivElement>) {
+    if (type === "empty" && dragging)
+      dispatchTiles({
+        type: "modify",
+        payload: {
+          id,
+          modified: { ...dragging, id, pos },
+        },
+      });
   }
 
   useEffect(() => {
@@ -53,7 +79,7 @@ export default function Tile({ type, weight, id, pos = { x: 0, y: 0 } }: Tile) {
       setImage(image);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [type]);
 
   return (
     <div
@@ -61,6 +87,9 @@ export default function Tile({ type, weight, id, pos = { x: 0, y: 0 } }: Tile) {
       onClick={handleOnClick}
       draggable={id.includes("rows")}
       onDrag={handleDragStart}
+      onDragEnd={handleDragStop}
+      onDragOver={(e) => handleDragOver(e)}
+      onDrop={(e) => handleDrop(e)}
     >
       {!["empty", "entrance", "wall"].includes(type) && (
         <>

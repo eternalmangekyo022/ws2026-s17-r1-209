@@ -55,11 +55,6 @@ declare global {
     payload: string;
   };
 
-  type TileDragAction = {
-    type: "drag";
-    payload: Tile;
-  };
-
   type TileModifyAction = {
     type: "modify";
     payload: {
@@ -72,10 +67,9 @@ declare global {
     type: "";
   };
 
-  type TileRedAction =
+  type TileReducerAction =
     | TileAddAction
     | TileErrorAction
     | TileModifyAction
-    | TileDragAction
     | TileEmptyAction;
 }

@@ -42,7 +42,7 @@ export default function App() {
     }
   }
 
-  function tilesReducer(state: Tile[], action: TileRedAction) {
+  function tilesReducer(state: Tile[], action: TileReducerAction) {
     switch (action.type) {
       case "add":
         return [...state, action.payload];
@@ -65,12 +65,12 @@ export default function App() {
   }
 
   useEffect(() => {
-    for (let i = 1; i < COLS + 1; i++) {
-      for (let j = 1; j < ROWS + 1; j++) {
+    for (let i = 1; i < ROWS + 1; i++) {
+      for (let j = 1; j < COLS + 1; j++) {
         dispatchTiles({
           type: "add",
           payload: {
-            type: "washer",
+            type: "empty",
             pos: {
               x: i,
               y: j,
