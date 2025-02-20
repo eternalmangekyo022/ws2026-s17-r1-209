@@ -66,7 +66,7 @@ export default function App() {
 
   useEffect(() => {
     for (let i = 1; i < COLS + 1; i++) {
-      for (let j = 1; j < ROWS; j++) {
+      for (let j = 1; j < ROWS + 1; j++) {
         dispatchTiles({
           type: "add",
           payload: {
