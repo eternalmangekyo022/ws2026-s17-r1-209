@@ -97,11 +97,6 @@ export default function App() {
           <hr />
 
           <hr />
-
-          <div className="alert">
-            <img src="./assets/alert.svg" alt="Alert" />
-            <span>This is an error message.</span>
-          </div>
         </main>
 
         {page < 4 && (

@@ -1,31 +1,3 @@
-## 2 Multistep form for registering a new laundromat location (Phase 2)
-
-<img src="./media/phase-2/examples/step-1.png" />
-
-In this phase, **Sudsy** asked you to develop a multistep form using a JavaScript framework of your choice: **React**, **Vue**, or **Angular**. (See [2.8](#28-library-framework-and-npm-module-limitations))  
-_Place all source files under the `phase-2-src` folder._
-
-You can find an example video about the form in the [`/media/phase-2/examples/demo.mov`](./media/phase-2/examples/demo.mov) folder.
-
-The form consists of four steps:
-
-1. General information
-2. Floorplan
-3. Extras
-4. Finish Screen
-
-You are provided with a **pre-designed HTML/CSS template** to ensure a consistent, modern look. The task can be completed without modifying the provided `style.css` file, but you may add additional styles if necessary.  
-Responsiveness is not required, and submissions will be evaluated on a **Full HD** screen. The template files are available in the [`/media/phase-2/template`](./media/phase-2/template) folder.
-
-### 2.1 Header
-
-The header includes the form **title**, a **fullscreen** button in the top-right corner, and a visual indicator of the **steps**.
-
-#### 2.1.1 Fullscreen
-
-- Clicking the fullscreen button should open the form in **fullscreen mode**, hiding all other browser elements (e.g., the URL bar and OS dock).
-- The user can exit fullscreen by clicking the button again or pressing the `Esc` key.
-
 #### 2.1.2 Steps
 
 - Four step buttons visually indicate progress.
@@ -37,29 +9,7 @@ The header includes the form **title**, a **fullscreen** button in the top-right
 
 - **Next Button:** triggering validation. If validation errors exist, navigation is blocked, and error messages are displayed. More about validation later.
 
-Navigating back and forth should persist the filled data.
-
-#### 2.3.1 Fields and their validations
-
-Please create the layout of the inputs as it is in the video.
-
-#### 2.3.2 Validation
-
-The required validations on the fields are described above.
-
-- Validate the fields when the user **clicks the Next button**.
-- **Use custom validation** _(do not use the default browser validation)_.
-- Display error messages below invalid fields. You can see an example in the provided HTML template.
-- **Focus** the first invalid field.
-- Trigger re-validation and provide instant feedback as the user corrects errors.
-
-**Example workflow:**
-
-1. I fill every field except the **Name** and **Postal code**
-2. I click the Next button
-3. I see error messages below the **Name** and **Postal code** fields
-4. The **Name** input is focused
-5. I start to type in the **Name** field to fix the validation error, and I get instant feedback when the field turns into valid. I don't need to click the 'Next' button again to validate.
+Navigating back and forth should persist the filled data
 
 ### 2.4 Step 2: Floorplan Design
 

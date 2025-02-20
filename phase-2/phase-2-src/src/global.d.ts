@@ -18,6 +18,7 @@ declare global {
   }
 
   type ITileFormats =
+    | "empty"
     | "waiting"
     | "table"
     | "entrance"
@@ -26,7 +27,7 @@ declare global {
     | "dryer";
 
   interface IGeneralTile {
-    type: Omit<ITileFormats, "dryer" | "washer">;
+    type: "empty" | "waiting" | "table" | "entrance" | "wall";
   }
 
   interface IWasher {
@@ -39,10 +40,38 @@ declare global {
     weight: 18 | 25;
   }
 
+  interface RowKey {
+    key: `row-${string}`;
+    pos?: never;
+  }
+
+  interface NormalKey {
+    key: string;
+    pos: {
+      x: number;
+      y: number;
+    };
+  }
+
   type Tile = {
     id: number;
-    pos: {
-      [keyof("x" | "y")]: number;
+    weight?: number;
+  } & (IGeneralTile | IWasher | IDryer) &
+    (RowKey | NormalKey);
+
+  type AddActionArg = {
+    type: "add";
+    payload: {
+      x: number;
+      y: number;
+      type: ITileFormats;
     };
-  } & (IGeneralTile | IWasher | IDryer);
+  };
+
+  type ErrorActionArg = {
+    type: "error";
+    payload: string;
+  };
+
+  type TileActionArg = AddActionArg | ErrorActionArg;
 }
