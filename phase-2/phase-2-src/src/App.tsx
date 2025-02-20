@@ -26,6 +26,7 @@ export default function App() {
   const errors = useRef<{ id: number; name: keyof IFormState }[]>([]);
   const [shouldFocus, setShouldFocus] = useState({ id: 0 });
   const [validate, setValidate] = useState(false);
+  const [dragging, setDragging] = useState<Tile | null>(null);
 
   function pageReducer(
     state: number,
@@ -41,10 +42,7 @@ export default function App() {
     }
   }
 
-  function tilesReducer(
-    state: Tile[],
-    action: TileAddAction | TileErrorAction | TileModifyAction
-  ) {
+  function tilesReducer(state: Tile[], action: TileRedAction) {
     switch (action.type) {
       case "add":
         return [...state, action.payload];
@@ -83,6 +81,7 @@ export default function App() {
         });
       }
     }
+    return () => dispatchTiles({ type: "" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -109,7 +108,9 @@ export default function App() {
 
           {page === 2 && (
             <>
-              <LayoutContext.Provider value={{ dispatchTiles, tiles }}>
+              <LayoutContext.Provider
+                value={{ dispatchTiles, tiles, dragging, setDragging }}
+              >
                 <Layout />
               </LayoutContext.Provider>
             </>

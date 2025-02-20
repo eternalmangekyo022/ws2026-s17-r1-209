@@ -43,6 +43,10 @@ export default function Tile({ type, weight, id, pos = { x: 0, y: 0 } }: Tile) {
       });
   }
 
+  function handleDragStart() {
+    dispatchTiles({ type: "" });
+  }
+
   useEffect(() => {
     if (!["empty", "wall", "entrance"].includes(type)) {
       const image = getImage();
@@ -52,7 +56,12 @@ export default function Tile({ type, weight, id, pos = { x: 0, y: 0 } }: Tile) {
   }, []);
 
   return (
-    <div className={`grid-item ${type}`} onClick={handleOnClick}>
+    <div
+      className={`grid-item ${type}`}
+      onClick={handleOnClick}
+      draggable={id.includes("rows")}
+      onDrag={handleDragStart}
+    >
       {!["empty", "entrance", "wall"].includes(type) && (
         <>
           <img src={image.img as string} alt={image.alt} />
