@@ -26,52 +26,42 @@ declare global {
     | "washer"
     | "dryer";
 
-  interface IGeneralTile {
-    type: "empty" | "waiting" | "table" | "entrance" | "wall";
-  }
-
-  interface IWasher {
-    type: "washer";
-    weight: 8 | 11;
-  }
-
-  interface IDryer {
-    type: "dryer";
-    weight: 18 | 25;
-  }
-
-  interface RowKey {
-    key: `row-${string}`;
-    pos?: never;
-  }
-
-  interface NormalKey {
-    key: string;
-    pos: {
+  type Tile = {
+    type: ITileFormats;
+    id: string;
+    weight?: 8 | 11 | 18 | 25;
+    pos?: {
       x: number;
       y: number;
     };
-  }
+  };
 
-  type Tile = {
-    id: number;
-    weight?: number;
-  } & (IGeneralTile | IWasher | IDryer) &
-    (RowKey | NormalKey);
-
-  type AddActionArg = {
+  //still have to add scenarios
+  type TileAddAction = {
     type: "add";
     payload: {
-      x: number;
-      y: number;
+      pos: {
+        x: number;
+        y: number;
+      };
+      weight: 8 | 11 | 18 | 25;
+      id: string;
       type: ITileFormats;
     };
   };
 
-  type ErrorActionArg = {
+  type TileErrorAction = {
     type: "error";
     payload: string;
   };
 
-  type TileActionArg = AddActionArg | ErrorActionArg;
+  type TileModifyAction = {
+    type: "modify";
+    payload: {
+      id: string;
+      modified: Tile;
+    };
+  };
+
+  type TileActionArg = TileAddAction | TileErrorAction | TileModifyAction;
 }

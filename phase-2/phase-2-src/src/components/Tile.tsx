@@ -1,11 +1,10 @@
 import Machine from "../assets/washing-machine.svg";
 import Waiting from "../assets/armchair.svg";
 import Table from "../assets/space.svg";
-
 import { useContext, useState, useEffect } from "react";
 import LayoutContext from "../context/layout";
 
-export default function Tile({ type, weight, id, pos }: Tile) {
+export default function Tile({ type, weight, id, pos = { x: 0, y: 0 } }: Tile) {
   const { tiles, dispatchTiles } = useContext(LayoutContext);
 
   const [image, setImage] = useState<{ img: string | null; alt: string }>({
@@ -28,15 +27,32 @@ export default function Tile({ type, weight, id, pos }: Tile) {
     }
   }
 
+  function handleOnClick() {
+    if (type !== "empty")
+      dispatchTiles({
+        type: "modify",
+        payload: {
+          id,
+          modified: {
+            id,
+            type: "empty",
+            pos,
+            weight,
+          },
+        },
+      });
+  }
+
   useEffect(() => {
     if (!["empty", "wall", "entrance"].includes(type)) {
       const image = getImage();
       setImage(image);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className={`grid-item ${type}`}>
+    <div className={`grid-item ${type}`} onClick={handleOnClick}>
       {!["empty", "entrance", "wall"].includes(type) && (
         <>
           <img src={image.img as string} alt={image.alt} />

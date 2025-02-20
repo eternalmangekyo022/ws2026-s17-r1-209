@@ -1,14 +1,17 @@
 import Header from "./components/Header";
-import { useReducer, useState, useRef } from "react";
+import { useReducer, useState, useRef, useEffect } from "react";
 //import HeaderContext from "./context/header.ts";
 
+import LayoutContext from "./context/layout";
 import RegisterContext from "./context/register";
 import Register from "./pages/Register";
 import Layout from "./pages/Layout";
 
 export default function App() {
   const articleRef = useRef<HTMLElement>(null);
+  const [COLS, ROWS] = [5, 6];
   const [page, dispatchPage] = useReducer(pageReducer, 2);
+  const [tiles, dispatchTiles] = useReducer(tilesReducer, []);
   const [form, dispatchForm] = useReducer(formReducer, {
     address: "",
     city: "",
@@ -38,12 +41,50 @@ export default function App() {
     }
   }
 
+  function tilesReducer(
+    state: Tile[],
+    action: TileAddAction | TileErrorAction | TileModifyAction
+  ) {
+    switch (action.type) {
+      case "add":
+        return [...state, action.payload];
+      case "error":
+        return [];
+      case "modify":
+        return state.map((i) =>
+          i.id === action.payload.id ? action.payload.modified : i
+        );
+      default:
+        return [];
+    }
+  }
+
   function formReducer(
     state: IFormState,
     action: { type: keyof IFormState; payload: string }
   ) {
     return { ...state, [action.type]: action.payload };
   }
+
+  useEffect(() => {
+    for (let i = 1; i < COLS + 1; i++) {
+      for (let j = 1; j < ROWS; j++) {
+        dispatchTiles({
+          type: "add",
+          payload: {
+            type: "washer",
+            pos: {
+              x: i,
+              y: j,
+            },
+            id: `${i};${j}`,
+            weight: 8,
+          },
+        });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -68,7 +109,9 @@ export default function App() {
 
           {page === 2 && (
             <>
-              <Layout />
+              <LayoutContext.Provider value={{ dispatchTiles, tiles }}>
+                <Layout />
+              </LayoutContext.Provider>
             </>
           )}
 
