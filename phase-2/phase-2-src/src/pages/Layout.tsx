@@ -2,11 +2,30 @@ import Washer from "../assets/washing-machine.svg";
 import Waiting from "../assets/armchair.svg";
 import Table from "../assets/space.svg";
 
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import Tile from "../components/Tile";
+import LayoutContext from "../context/layout";
 
 export default function Layout() {
+  const [COLS, ROWS] = [5, 6];
   const [error, setError] = useState("");
+  const { dispatchTiles, tiles } = useContext(LayoutContext);
+
+  useEffect(() => {
+    for (let i = 1; i < COLS + 1; i++) {
+      for (let j = 1; j < ROWS; j++) {
+        dispatchTiles({
+          type: "add",
+          payload: {
+            type: "empty",
+            x: i,
+            y: j,
+          },
+        }); // Added missing closing brace and semicolon
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

@@ -5,35 +5,15 @@ import Table from "../assets/space.svg";
 import { useContext, useState, useEffect } from "react";
 import LayoutContext from "../context/layout";
 
-interface RowTest {
-  name: `row-${string}`; // Ensures name starts with "row-"
-  tableId?: never; // tableId is not allowed
-}
-
-interface RegularTest {
-  name: string;
-  tableId: number; // tableId is required
-}
-
-type Test = RowTest | RegularTest;
-
-// Examples
-const validTest1: Test = { name: "row-123" }; // Valid: tableId is not required
-const validTest2: Test = { name: "something", tableId: 1 }; // Valid: tableId is required
-
-console.log(validTest1, validTest2);
-
-type Props = Tile;
-
-export default function Tile({ type, weight, id, pos }: Props) {
+export default function Tile({ type, weight, id, pos }: Tile) {
   const { tiles, dispatchTiles } = useContext(LayoutContext);
 
-  const [image, setImage] = useState<{ img: string; alt: string }>({
-    img: "",
+  const [image, setImage] = useState<{ img: string | null; alt: string }>({
+    img: null,
     alt: "",
   });
 
-  function getImage(): { img: string; alt: string } {
+  function getImage(): { img: string | null; alt: string } {
     switch (type) {
       case "dryer":
         return { img: Machine, alt: "Washing Machine" };
@@ -44,7 +24,7 @@ export default function Tile({ type, weight, id, pos }: Props) {
       case "waiting":
         return { img: Waiting, alt: "" };
       default:
-        return image;
+        return { img: null, alt: "" };
     }
   }
 
@@ -57,9 +37,9 @@ export default function Tile({ type, weight, id, pos }: Props) {
 
   return (
     <div className={`grid-item ${type}`}>
-      {!["empty", "entrance"].includes(type) && (
+      {!["empty", "entrance", "wall"].includes(type) && (
         <>
-          <img src={image.img} alt={image.alt} />
+          <img src={image.img as string} alt={image.alt} />
           <span>
             {!["table", "waiting"].includes(type)
               ? `${type[0].toUpperCase()}${type.substring(1)}`
@@ -70,6 +50,7 @@ export default function Tile({ type, weight, id, pos }: Props) {
           </span>
         </>
       )}
+      {type === "wall" && <span>Wall</span>}
     </div>
   );
 }
