@@ -11,37 +11,12 @@
 
 Navigating back and forth should persist the filled data
 
-### 2.4 Step 2: Floorplan Design
-
-Design the laundromat layout using a grid-based tool.
-
-#### 2.4.1 Toolbar
-
-Includes six **draggable** items:
-
-- Washer (8 kg)
-- Washer (11 kg)
-- Dryer (18 kg)
-- Dryer (25 kg)
-- Folding Table
-- Waiting Area
-
 Please refer to the video example and the provided HTML template on how they should look (colors, icons, etc).
 
 **Drag and drop**
 
 - The user is able to **drag an item** from the toolbar and drop it on a tile of the grid. When the drop is completed, the tool is shown in the grid.
-- The user is able to use a tool multiple times.
 - When the user drags a tool over a grid tile, the tile's opacity is set to 0.25, **indicating that it's possible to drop**.
-
-#### 2.4.2 Grid
-
-- The grid consists of 6 rows and 5 columns. However, it should be super easy to modify these values in the code, so please create and use constant variables, to allow fine-tuning the grid later on.
-- **Interactions:**
-  - Drag-and-drop tools onto grid tiles (replacing existing items)
-  - Single-click to clear a tile.
-  - Double-click to add a wall.
-  - Right-click to mark an entrance. _(the green box)_
 
 #### 2.4.3 Validation
 

@@ -5,13 +5,14 @@ import { useContext, useState, useEffect } from "react";
 import LayoutContext from "../context/layout";
 
 export default function Tile({ type, weight, id, pos = { x: 0, y: 0 } }: Tile) {
-  const { tiles, dispatchTiles, dragging, setDragging } =
+  const { tiles, dispatchTiles, dragging, setDragging, safeTiles } =
     useContext(LayoutContext);
 
   const [image, setImage] = useState<{ img: string | null; alt: string }>({
     img: null,
     alt: "",
   });
+  const [isHovered, setIsHovered] = useState(false);
 
   function getImage(): { img: string | null; alt: string } {
     switch (type) {
@@ -28,12 +29,14 @@ export default function Tile({ type, weight, id, pos = { x: 0, y: 0 } }: Tile) {
     }
   }
 
-  function handleOnClick() {
-    if (type !== "empty")
+  function handleOnClick(clickType: "single" | "double") {
+    if (id.includes("rows")) return;
+    const uid: PosId = id as PosId;
+    if (type !== "empty" && clickType === "single") {
       dispatchTiles({
         type: "modify",
         payload: {
-          id,
+          id: uid,
           modified: {
             id,
             type: "empty",
@@ -42,6 +45,20 @@ export default function Tile({ type, weight, id, pos = { x: 0, y: 0 } }: Tile) {
           },
         },
       });
+    } else if (clickType === "double") {
+      dispatchTiles({
+        type: "modify",
+        payload: {
+          id: uid,
+          modified: {
+            id,
+            type: "wall",
+            pos,
+            weight,
+          },
+        },
+      });
+    }
   }
 
   function handleDragStart() {
@@ -60,17 +77,37 @@ export default function Tile({ type, weight, id, pos = { x: 0, y: 0 } }: Tile) {
   function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
     if (id.includes("rows")) return;
     e.preventDefault();
+    setIsHovered(true);
   }
 
-  function handleDrop(e: React.DragEvent<HTMLDivElement>) {
-    if (type === "empty" && dragging)
-      dispatchTiles({
-        type: "modify",
-        payload: {
+  function handleDrop() {
+    if (!dragging) return;
+    const uid = id as PosId;
+    if (isHovered) setIsHovered(false);
+    dispatchTiles({
+      type: "modify",
+      payload: {
+        id: uid,
+        modified: { ...dragging, id, pos },
+      },
+    });
+  }
+
+  function handleContextMenu(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    const uid = id as PosId;
+    e.preventDefault();
+    dispatchTiles({
+      type: "modify",
+      payload: {
+        id: uid,
+        modified: {
           id,
-          modified: { ...dragging, id, pos },
+          type: "entrance",
+          pos,
+          weight,
         },
-      });
+      },
+    });
   }
 
   useEffect(() => {
@@ -84,12 +121,16 @@ export default function Tile({ type, weight, id, pos = { x: 0, y: 0 } }: Tile) {
   return (
     <div
       className={`grid-item ${type}`}
-      onClick={handleOnClick}
+      onClick={() => handleOnClick("single")}
+      onDoubleClick={() => handleOnClick("double")}
       draggable={id.includes("rows")}
       onDrag={handleDragStart}
       onDragEnd={handleDragStop}
       onDragOver={(e) => handleDragOver(e)}
-      onDrop={(e) => handleDrop(e)}
+      onDragLeave={() => setIsHovered(false)}
+      onDrop={handleDrop}
+      onContextMenu={(e) => handleContextMenu(e)}
+      style={{ opacity: isHovered ? 0.25 : 0.75 }}
     >
       {!["empty", "entrance", "wall"].includes(type) && (
         <>
@@ -104,6 +145,7 @@ export default function Tile({ type, weight, id, pos = { x: 0, y: 0 } }: Tile) {
           </span>
         </>
       )}
+      {safeTiles.filter((i) => i.id === id).length > 0 && <span>Safe</span>}
       {type === "wall" && <span>Wall</span>}
     </div>
   );

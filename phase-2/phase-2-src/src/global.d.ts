@@ -26,9 +26,11 @@ declare global {
     | "washer"
     | "dryer";
 
+  type PosId = `${number};${number}`;
+
   type Tile = {
     type: ITileFormats;
-    id: string;
+    id: PosId | `rows-${string}`;
     weight?: 8 | 11 | 18 | 25;
     pos?: {
       x: number;
@@ -45,7 +47,7 @@ declare global {
         y: number;
       };
       weight: 8 | 11 | 18 | 25;
-      id: string;
+      id: PosId;
       type: ITileFormats;
     };
   };
@@ -58,7 +60,7 @@ declare global {
   type TileModifyAction = {
     type: "modify";
     payload: {
-      id: string;
+      id: PosId;
       modified: Tile;
     };
   };
@@ -66,6 +68,19 @@ declare global {
   type TileEmptyAction = {
     type: "";
   };
+
+  type SafeTileResetAction = {
+    type: "reset";
+  };
+
+  type SafeTileReducerAction =
+    | {
+        type: "add" | "remove";
+        payload: {
+          id: PosId;
+        };
+      }
+    | SafeTileResetAction;
 
   type TileReducerAction =
     | TileAddAction

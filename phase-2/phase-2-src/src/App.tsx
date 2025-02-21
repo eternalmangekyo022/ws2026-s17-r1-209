@@ -12,6 +12,7 @@ export default function App() {
   const [COLS, ROWS] = [5, 6];
   const [page, dispatchPage] = useReducer(pageReducer, 2);
   const [tiles, dispatchTiles] = useReducer(tilesReducer, []);
+  const [safeTiles, dispatchSafeTiles] = useReducer(safeTilesReducer, []);
   const [form, dispatchForm] = useReducer(formReducer, {
     address: "",
     city: "",
@@ -57,6 +58,22 @@ export default function App() {
     }
   }
 
+  function safeTilesReducer(
+    state: { id: `${number};${number}` }[],
+    action: SafeTileReducerAction
+  ) {
+    switch (action.type) {
+      case "add":
+        return [...state, action.payload];
+      case "remove":
+        return state.filter((i) => i.id !== action.payload.id);
+      case "reset":
+        return [];
+      default:
+        return [];
+    }
+  }
+
   function formReducer(
     state: IFormState,
     action: { type: keyof IFormState; payload: string }
@@ -64,9 +81,12 @@ export default function App() {
     return { ...state, [action.type]: action.payload };
   }
 
-  useEffect(() => {
+  function initTiles() {
     for (let i = 1; i < ROWS + 1; i++) {
       for (let j = 1; j < COLS + 1; j++) {
+        if (i === 1 || i === 6 || j === 1 || j === 5) {
+          dispatchSafeTiles({ type: "add", payload: { id: `${i};${j}` } });
+        }
         dispatchTiles({
           type: "add",
           payload: {
@@ -81,7 +101,14 @@ export default function App() {
         });
       }
     }
-    return () => dispatchTiles({ type: "" });
+  }
+
+  useEffect(() => {
+    initTiles();
+    return () => {
+      dispatchTiles({ type: "" });
+      dispatchSafeTiles({ type: "reset" });
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -109,7 +136,14 @@ export default function App() {
           {page === 2 && (
             <>
               <LayoutContext.Provider
-                value={{ dispatchTiles, tiles, dragging, setDragging }}
+                value={{
+                  dispatchTiles,
+                  tiles,
+                  dragging,
+                  setDragging,
+                  safeTiles,
+                  dispatchSafeTiles,
+                }}
               >
                 <Layout />
               </LayoutContext.Provider>
