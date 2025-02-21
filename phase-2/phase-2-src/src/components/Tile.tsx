@@ -12,7 +12,7 @@ export default function Tile({ type, weight, id, pos = { x: 0, y: 0 } }: Tile) {
     alt: "",
   });
   const [isHovered, setIsHovered] = useState(false);
-
+  //
   function getImage(): { img: string | null; alt: string } {
     switch (type) {
       case "dryer":
