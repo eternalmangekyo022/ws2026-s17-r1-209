@@ -9,6 +9,7 @@ import Layout from "./pages/Layout";
 
 export default function App() {
   const articleRef = useRef<HTMLElement>(null);
+  const [wallChanged, setWallChanged] = useState(false);
   const [COLS, ROWS] = [5, 6];
   const [page, dispatchPage] = useReducer(pageReducer, 2);
   const [tiles, dispatchTiles] = useReducer(tilesReducer, []);
@@ -50,6 +51,13 @@ export default function App() {
       case "error":
         return [];
       case "modify":
+        if (action.payload.modified.type === "wall") setWallChanged(true);
+        if (
+          action.payload.modified.type !== "wall" &&
+          state.filter((i) => i.id === action.payload.id)[0].type === "wall"
+        ) {
+          setWallChanged(true);
+        }
         return state.map((i) =>
           i.id === action.payload.id ? action.payload.modified : i
         );
@@ -64,7 +72,9 @@ export default function App() {
   ) {
     switch (action.type) {
       case "add":
-        return [...state, action.payload];
+        return state.filter((i) => i.id === action.payload.id).length
+          ? state
+          : [...state, action.payload];
       case "remove":
         return state.filter((i) => i.id !== action.payload.id);
       case "reset":
@@ -81,21 +91,49 @@ export default function App() {
     return { ...state, [action.type]: action.payload };
   }
 
-  function initTiles() {
-    for (let i = 1; i < ROWS + 1; i++) {
-      for (let j = 1; j < COLS + 1; j++) {
-        if (i === 1 || i === 6 || j === 1 || j === 5) {
-          dispatchSafeTiles({ type: "add", payload: { id: `${i};${j}` } });
+  function initTiles(
+    { safeOnly }: { safeOnly?: boolean } = { safeOnly: false }
+  ) {
+    dispatchSafeTiles({ type: "reset" });
+    for (let x = 1; x < ROWS + 1; x++) {
+      for (let y = 1; y < COLS + 1; y++) {
+        if (x === 1 || x === 6 || y === 1 || y === 5) {
+          dispatchSafeTiles({ type: "add", payload: { id: `${x};${y}` } });
+        }
+        if (safeOnly) {
+          const wallHere = tiles.filter(
+            (i) => i.id === `${x};${y}` && i.type === "wall"
+          );
+          if (wallHere.length && wallHere[0].pos) {
+            console.log("safeOnly");
+            dispatchSafeTiles({
+              type: "add",
+              payload: { id: `${x - 1};${y}` },
+            });
+            dispatchSafeTiles({
+              type: "add",
+              payload: { id: `${x + 1};${y}` },
+            });
+            dispatchSafeTiles({
+              type: "add",
+              payload: { id: `${x};${y - 1}` },
+            });
+            dispatchSafeTiles({
+              type: "add",
+              payload: { id: `${x};${y + 1}` },
+            });
+          }
+          continue;
         }
         dispatchTiles({
           type: "add",
           payload: {
             type: "empty",
             pos: {
-              x: i,
-              y: j,
+              x: x,
+              y: y,
             },
-            id: `${i};${j}`,
+            id: `${x};${y}`,
             weight: 8,
           },
         });
@@ -111,6 +149,13 @@ export default function App() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (wallChanged) {
+      initTiles({ safeOnly: true });
+      setWallChanged(false);
+    }
+  }, [wallChanged]);
 
   return (
     <>
