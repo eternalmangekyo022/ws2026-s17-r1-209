@@ -69,18 +69,18 @@ declare global {
     type: "";
   };
 
-  type SafeTileResetAction = {
-    type: "reset";
+  type SafeTileGeneralAction = {
+    type: "resetSafe";
   };
 
   type SafeTileReducerAction =
     | {
-        type: "add" | "remove";
+        type: "addSafe" | "removeSafe";
         payload: {
           id: PosId;
         };
       }
-    | SafeTileResetAction;
+    | SafeTileGeneralAction;
 
   type TileReducerAction =
     | TileAddAction

@@ -1,22 +1,20 @@
 import { createContext } from "react";
 
 type Data = {
-  tiles: Tile[];
+  tiles: { tiles: Tile[]; safeTiles: { id: PosId }[] };
   dispatchTiles: (action: TileReducerAction) => void;
   dragging: null | Tile;
   // LOOOOW TAPER FADE
   setDragging: (tile: Tile | null) => void;
-  safeTiles: { id: `${number};${number}` }[];
-  dispatchSafeTiles: (action: SafeTileReducerAction) => void;
+  tilesError: boolean;
 };
 
 const data: Data = {
-  tiles: [],
+  tiles: { tiles: [], safeTiles: [] },
   dispatchTiles: () => {},
   dragging: null,
   setDragging: () => {},
-  safeTiles: [],
-  dispatchSafeTiles: () => {},
+  tilesError: false,
 };
 
 export default createContext(data);

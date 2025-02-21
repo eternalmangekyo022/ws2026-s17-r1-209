@@ -1,10 +1,11 @@
-import { useState, useContext } from "react";
+import Alert from "../assets/alert.svg";
+
+import { useContext } from "react";
 import Tile from "../components/Tile";
 import LayoutContext from "../context/layout";
 
 export default function Layout() {
-  const [error, setError] = useState("");
-  const { tiles } = useContext(LayoutContext);
+  const { tiles, tilesError } = useContext(LayoutContext);
 
   return (
     <>
@@ -17,8 +18,14 @@ export default function Layout() {
         <Tile id={"rows-5"} type="table" key={"row-table"} />
         <Tile id={"rows-6"} type="waiting" key={"row-waiting"} />
       </div>
+      {tilesError && (
+        <div className="alert">
+          <img src={Alert} alt="Alert" />
+          <span>Washers or Dryers can only be next to a wall.</span>
+        </div>
+      )}
       <div className="grid">
-        {tiles.map(({ id, type, pos, weight }, idx) => (
+        {tiles.tiles.map(({ id, type, pos, weight }, idx) => (
           <>
             {(type === "washer" || type === "dryer") && (
               <Tile id={id} key={idx} type={type} weight={weight} pos={pos} />
@@ -33,12 +40,6 @@ export default function Layout() {
           </>
         ))}
       </div>
-      {error && (
-        <div className="alert">
-          <img src="./assets/alert.svg" alt="Alert" />
-          <span>{error}</span>
-        </div>
-      )}
     </>
   );
 }

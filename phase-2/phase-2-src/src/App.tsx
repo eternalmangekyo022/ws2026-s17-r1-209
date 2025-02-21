@@ -12,8 +12,10 @@ export default function App() {
   const [wallChanged, setWallChanged] = useState(false);
   const [COLS, ROWS] = [5, 6];
   const [page, dispatchPage] = useReducer(pageReducer, 2);
-  const [tiles, dispatchTiles] = useReducer(tilesReducer, []);
-  const [safeTiles, dispatchSafeTiles] = useReducer(safeTilesReducer, []);
+  const [tiles, dispatchTiles] = useReducer(tilesReducer, {
+    tiles: [],
+    safeTiles: [],
+  });
   const [form, dispatchForm] = useReducer(formReducer, {
     address: "",
     city: "",
@@ -25,10 +27,11 @@ export default function App() {
     postalCode: "",
   });
   //add id of input if error occurs in input
-  const errors = useRef<{ id: number; name: keyof IFormState }[]>([]);
+  const formErrors = useRef<{ id: number; name: keyof IFormState }[]>([]);
   const [shouldFocus, setShouldFocus] = useState({ id: 0 });
   const [validate, setValidate] = useState(false);
   const [dragging, setDragging] = useState<Tile | null>(null);
+  const [tilesError, setTilesError] = useState(false);
 
   function pageReducer(
     state: number,
@@ -44,43 +47,47 @@ export default function App() {
     }
   }
 
-  function tilesReducer(state: Tile[], action: TileReducerAction) {
+  function tilesReducer(
+    state: { tiles: Tile[]; safeTiles: { id: PosId }[] },
+    action: TileReducerAction | SafeTileReducerAction
+  ): { tiles: Tile[]; safeTiles: { id: PosId }[] } {
     switch (action.type) {
       case "add":
-        return [...state, action.payload];
+        return { ...state, tiles: [...state.tiles, action.payload] };
       case "error":
-        return [];
+        return { tiles: [], safeTiles: [] }; // Return an object with empty arrays
       case "modify":
         if (action.payload.modified.type === "wall") setWallChanged(true);
         if (
           action.payload.modified.type !== "wall" &&
-          state.filter((i) => i.id === action.payload.id)[0].type === "wall"
+          state.tiles.filter((i) => i.id === action.payload.id)[0].type ===
+            "wall"
         ) {
           setWallChanged(true);
         }
-        return state.map((i) =>
-          i.id === action.payload.id ? action.payload.modified : i
-        );
+        return {
+          ...state,
+          tiles: state.tiles.map((i) =>
+            i.id === action.payload.id ? action.payload.modified : i
+          ),
+        };
+      case "addSafe":
+        return {
+          ...state,
+          safeTiles: state.safeTiles.filter((i) => i.id === action.payload.id)
+            .length
+            ? state.safeTiles
+            : [...state.safeTiles, action.payload],
+        };
+      case "removeSafe":
+        return {
+          ...state,
+          safeTiles: state.safeTiles.filter((i) => i.id !== action.payload.id),
+        };
+      case "resetSafe":
+        return { ...state, safeTiles: [] };
       default:
-        return [];
-    }
-  }
-
-  function safeTilesReducer(
-    state: { id: `${number};${number}` }[],
-    action: SafeTileReducerAction
-  ) {
-    switch (action.type) {
-      case "add":
-        return state.filter((i) => i.id === action.payload.id).length
-          ? state
-          : [...state, action.payload];
-      case "remove":
-        return state.filter((i) => i.id !== action.payload.id);
-      case "reset":
-        return [];
-      default:
-        return [];
+        return { tiles: [], safeTiles: [] }; // Return an object with empty arrays
     }
   }
 
@@ -94,32 +101,31 @@ export default function App() {
   function initTiles(
     { safeOnly }: { safeOnly?: boolean } = { safeOnly: false }
   ) {
-    dispatchSafeTiles({ type: "reset" });
+    dispatchTiles({ type: "resetSafe" });
     for (let x = 1; x < ROWS + 1; x++) {
       for (let y = 1; y < COLS + 1; y++) {
         if (x === 1 || x === 6 || y === 1 || y === 5) {
-          dispatchSafeTiles({ type: "add", payload: { id: `${x};${y}` } });
+          dispatchTiles({ type: "addSafe", payload: { id: `${x};${y}` } });
         }
         if (safeOnly) {
-          const wallHere = tiles.filter(
+          const wallHere = tiles.tiles.filter(
             (i) => i.id === `${x};${y}` && i.type === "wall"
           );
           if (wallHere.length && wallHere[0].pos) {
-            console.log("safeOnly");
-            dispatchSafeTiles({
-              type: "add",
+            dispatchTiles({
+              type: "addSafe",
               payload: { id: `${x - 1};${y}` },
             });
-            dispatchSafeTiles({
-              type: "add",
+            dispatchTiles({
+              type: "addSafe",
               payload: { id: `${x + 1};${y}` },
             });
-            dispatchSafeTiles({
-              type: "add",
+            dispatchTiles({
+              type: "addSafe",
               payload: { id: `${x};${y - 1}` },
             });
-            dispatchSafeTiles({
-              type: "add",
+            dispatchTiles({
+              type: "addSafe",
               payload: { id: `${x};${y + 1}` },
             });
           }
@@ -145,7 +151,7 @@ export default function App() {
     initTiles();
     return () => {
       dispatchTiles({ type: "" });
-      dispatchSafeTiles({ type: "reset" });
+      dispatchTiles({ type: "resetSafe" });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -156,6 +162,31 @@ export default function App() {
       setWallChanged(false);
     }
   }, [wallChanged]);
+
+  function validateTiles(_tiles: Tile[], _safeTiles: { id: PosId }[]): boolean {
+    for (let i = 0; i < _tiles.length; i++) {
+      const isSafe = !!_safeTiles.filter(
+        (safeTile) => safeTile.id === _tiles[i].id
+      ).length;
+      const isMachine = ["washer", "dryer"].includes(_tiles[i].type);
+      if (!isSafe && isMachine) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  useEffect(() => {
+    if (!tiles.tiles.length || !tiles.safeTiles.length) return;
+    const isError = validateTiles(tiles.tiles, tiles.safeTiles);
+    console.log(
+      "change",
+      tiles.tiles.filter((i) => i.type === "wall").length,
+      isError,
+      tilesError
+    );
+    if (tilesError && !isError) setTilesError(false);
+  }, [tiles.tiles, tiles.safeTiles]);
 
   return (
     <>
@@ -169,7 +200,7 @@ export default function App() {
                 form,
                 dispatchForm,
                 shouldFocus,
-                errors,
+                errors: formErrors,
                 validate,
                 setValidate,
               }}
@@ -182,12 +213,11 @@ export default function App() {
             <>
               <LayoutContext.Provider
                 value={{
+                  tilesError,
                   dispatchTiles,
                   tiles,
                   dragging,
                   setDragging,
-                  safeTiles,
-                  dispatchSafeTiles,
                 }}
               >
                 <Layout />
@@ -234,12 +264,18 @@ export default function App() {
 
             <button
               onClick={() => {
-                setValidate(true);
-                if (errors.current.length) {
-                  setShouldFocus({
-                    id: Math.min(...errors.current.map((i) => i.id)),
-                  });
-                } else dispatchPage({ type: "increment" });
+                if (page === 1) {
+                  setValidate(true);
+                  if (formErrors.current.length) {
+                    setShouldFocus({
+                      id: Math.min(...formErrors.current.map((i) => i.id)),
+                    });
+                  } else dispatchPage({ type: "increment" });
+                } else if (page === 2) {
+                  const isError = validateTiles(tiles.tiles, tiles.safeTiles);
+                  setTilesError(isError);
+                  if (!isError) dispatchPage({ type: "increment" });
+                }
               }}
               className="btn"
               disabled={page === 4}

@@ -5,8 +5,7 @@ import { useContext, useState, useEffect } from "react";
 import LayoutContext from "../context/layout";
 
 export default function Tile({ type, weight, id, pos = { x: 0, y: 0 } }: Tile) {
-  const { tiles, dispatchTiles, dragging, setDragging, safeTiles } =
-    useContext(LayoutContext);
+  const { dispatchTiles, dragging, setDragging } = useContext(LayoutContext);
 
   const [image, setImage] = useState<{ img: string | null; alt: string }>({
     img: null,
@@ -145,7 +144,9 @@ export default function Tile({ type, weight, id, pos = { x: 0, y: 0 } }: Tile) {
           </span>
         </>
       )}
-      {safeTiles.filter((i) => i.id === id).length > 0 && <span>Safe</span>}
+      {/* tiles.safeTiles.filter((i) => i.id === id).length > 0 && (
+        <span>Safe</span>
+      ) */}
       {type === "wall" && <span>Wall</span>}
     </div>
   );

@@ -20,7 +20,6 @@ Please refer to the video example and the provided HTML template on how they sho
 
 #### 2.4.3 Validation
 
-- **Rule:** Machines must be placed adjacent to a wall (grid edge or user-added walls).
 - Trigger validation when the user clicks Next. Display errors as an alert box between the toolbar and grid.
 - When the error is fixed, it should be displayed immediately for instant feedback
 - Error message: **"Washers or Dryers can only be next to a wall."**
