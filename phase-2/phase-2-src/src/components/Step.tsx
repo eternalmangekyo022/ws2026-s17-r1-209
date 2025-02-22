@@ -5,6 +5,8 @@ type Props = {
   step: number;
 };
 
+//
+
 export default function Step({ step, page }: Props) {
   const isCompleted = page === 4;
   const stepState = isCompleted
