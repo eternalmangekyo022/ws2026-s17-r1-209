@@ -1,0 +1,9 @@
+{
+	"services": {
+		"freeWiFi": "Free Wi-Fi",
+		"accessibleEntry": "Accessible Entry",
+		"loungeArea": "Lounge Area",
+		"backgroundMusic": "Background Music",
+		"costumerService": "Personal costumer service"
+	}
+}
