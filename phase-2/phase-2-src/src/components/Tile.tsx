@@ -1,10 +1,15 @@
 import Machine from "../assets/washing-machine.svg";
 import Waiting from "../assets/armchair.svg";
 import Table from "../assets/space.svg";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, memo } from "react";
 import LayoutContext from "../context/layout";
 
-export default function Tile({ type, weight, id, pos = { x: 0, y: 0 } }: Tile) {
+export default memo(function Tile({
+  type,
+  weight,
+  id,
+  pos = { x: 0, y: 0 },
+}: Tile) {
   const { dispatchTiles, dragging, setDragging } = useContext(LayoutContext);
 
   const [image, setImage] = useState<{ img: string | null; alt: string }>({
@@ -144,10 +149,7 @@ export default function Tile({ type, weight, id, pos = { x: 0, y: 0 } }: Tile) {
           </span>
         </>
       )}
-      {/* tiles.safeTiles.filter((i) => i.id === id).length > 0 && (
-        <span>Safe</span>
-      ) */}
       {type === "wall" && <span>Wall</span>}
     </div>
   );
-}
+});

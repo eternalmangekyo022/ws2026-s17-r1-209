@@ -16,7 +16,7 @@ export default function App() {
   const articleRef = useRef<HTMLElement>(null);
   const [wallChanged, setWallChanged] = useState(false);
   const [COLS, ROWS] = [5, 6];
-  const [page, dispatchPage] = useReducer(pageReducer, 4);
+  const [page, dispatchPage] = useReducer(pageReducer, 2);
   const [tiles, dispatchTiles] = useReducer(tilesReducer, {
     tiles: [],
     safeTiles: [],
@@ -109,11 +109,19 @@ export default function App() {
   function formReducer(
     state: IFormState,
     action: { type: keyof IFormState | "reset"; payload: string }
-  ) {
-    console.log(action.type);
+  ): IFormState {
     switch (action.type) {
       case "reset":
-        return Object.fromEntries(Object.entries(state).map(([k]) => [k, ""]));
+        return {
+          name: "",
+          description: "",
+          postalCode: "",
+          city: "",
+          address: "",
+          from: "",
+          to: "",
+          openAt: "everyday",
+        };
       default:
         return { ...state, [action.type]: action.payload };
     }
@@ -211,7 +219,9 @@ export default function App() {
   return (
     <>
       <article className="container" ref={articleRef}>
-        <Header page={page} articleRef={articleRef} />
+        <PageContext.Provider value={{ page, dispatchPage }}>
+          <Header articleRef={articleRef} />
+        </PageContext.Provider>
 
         <main className="main">
           {page === 1 && (
