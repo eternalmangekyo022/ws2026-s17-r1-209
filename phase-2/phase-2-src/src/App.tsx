@@ -7,6 +7,10 @@ import LayoutContext from "./context/layout";
 import RegisterContext from "./context/register";
 import ServicesContext from "./context/services";
 
+import pageReducer from "./reducers/pageReducer";
+import formReducer from "./reducers/formReducer";
+import servicesReducer from "./reducers/servicesReducer";
+
 import Register from "./pages/Register";
 import Layout from "./pages/Layout";
 import Services from "./pages/Services";
@@ -45,26 +49,6 @@ export default function App() {
   const [validate, setValidate] = useState(false);
   const [dragging, setDragging] = useState<Tile | null>(null);
   const [tilesError, setTilesError] = useState(false);
-
-  function pageReducer(
-    state: number,
-    action:
-      | { type: "increment" | "decrement" | "reset" }
-      | { type: "set"; payload: number }
-  ) {
-    switch (action.type) {
-      case "increment":
-        return state === 4 ? state : state + 1;
-      case "decrement":
-        return state === 1 ? state : state - 1;
-      case "reset":
-        return 1;
-      case "set":
-        return action.payload;
-      default:
-        throw new Error("error");
-    }
-  }
 
   function tilesReducer(
     state: { tiles: Tile[]; safeTiles: { id: PosId }[] },
@@ -107,27 +91,6 @@ export default function App() {
         return { ...state, safeTiles: [] };
       default:
         return { tiles: [], safeTiles: [] }; // Return an object with empty arrays
-    }
-  }
-
-  function formReducer(
-    state: IFormState,
-    action: { type: keyof IFormState | "reset"; payload: string }
-  ): IFormState {
-    switch (action.type) {
-      case "reset":
-        return {
-          name: "",
-          description: "",
-          postalCode: "",
-          city: "",
-          address: "",
-          from: "",
-          to: "",
-          openAt: "everyday",
-        };
-      default:
-        return { ...state, [action.type]: action.payload };
     }
   }
 
@@ -178,10 +141,6 @@ export default function App() {
         });
       }
     }
-  }
-
-  function servicesReducer(state: IServices, action: ServicesReducerAction) {
-    return { ...state, [action.type]: action.payload };
   }
 
   function validateTiles(_tiles: Tile[], _safeTiles: { id: PosId }[]): boolean {
