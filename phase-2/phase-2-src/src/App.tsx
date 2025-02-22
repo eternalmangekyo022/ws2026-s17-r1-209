@@ -4,27 +4,39 @@ import { useReducer, useState, useRef, useEffect } from "react";
 
 import LayoutContext from "./context/layout";
 import RegisterContext from "./context/register";
+import ServicesContext from "./context/services";
+
 import Register from "./pages/Register";
 import Layout from "./pages/Layout";
+import Services from "./pages/Services";
+import Final from "./pages/Final";
 
 export default function App() {
   const articleRef = useRef<HTMLElement>(null);
   const [wallChanged, setWallChanged] = useState(false);
   const [COLS, ROWS] = [5, 6];
-  const [page, dispatchPage] = useReducer(pageReducer, 2);
+  const [page, dispatchPage] = useReducer(pageReducer, 4);
   const [tiles, dispatchTiles] = useReducer(tilesReducer, {
     tiles: [],
     safeTiles: [],
   });
   const [form, dispatchForm] = useReducer(formReducer, {
-    address: "",
-    city: "",
+    name: "",
     description: "",
+    postalCode: "",
+    city: "",
+    address: "",
     from: "",
     to: "",
-    name: "",
     openAt: "everyday",
-    postalCode: "",
+  });
+  const [services, dispatchServices] = useReducer(servicesReducer, {
+    freeWiFi: false,
+    accessibleEntry: false,
+    loungeArea: false,
+    backgroundMusic: false,
+    costumerService: false,
+    parking: "Easy",
   });
   //add id of input if error occurs in input
   const formErrors = useRef<{ id: number; name: keyof IFormState }[]>([]);
@@ -147,6 +159,23 @@ export default function App() {
     }
   }
 
+  function servicesReducer(state: IServices, action: ServicesReducerAction) {
+    return { ...state, [action.type]: action.payload };
+  }
+
+  function validateTiles(_tiles: Tile[], _safeTiles: { id: PosId }[]): boolean {
+    for (let i = 0; i < _tiles.length; i++) {
+      const isSafe = !!_safeTiles.filter(
+        (safeTile) => safeTile.id === _tiles[i].id
+      ).length;
+      const isMachine = ["washer", "dryer"].includes(_tiles[i].type);
+      if (!isSafe && isMachine) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   useEffect(() => {
     initTiles();
     return () => {
@@ -163,28 +192,10 @@ export default function App() {
     }
   }, [wallChanged]);
 
-  function validateTiles(_tiles: Tile[], _safeTiles: { id: PosId }[]): boolean {
-    for (let i = 0; i < _tiles.length; i++) {
-      const isSafe = !!_safeTiles.filter(
-        (safeTile) => safeTile.id === _tiles[i].id
-      ).length;
-      const isMachine = ["washer", "dryer"].includes(_tiles[i].type);
-      if (!isSafe && isMachine) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   useEffect(() => {
     if (!tiles.tiles.length || !tiles.safeTiles.length) return;
     const isError = validateTiles(tiles.tiles, tiles.safeTiles);
-    console.log(
-      "change",
-      tiles.tiles.filter((i) => i.type === "wall").length,
-      isError,
-      tilesError
-    );
+
     if (tilesError && !isError) setTilesError(false);
   }, [tiles.tiles, tiles.safeTiles]);
 
@@ -225,31 +236,15 @@ export default function App() {
             </>
           )}
 
-          <label className="cnr-label">
-            <input type="checkbox" />
-            <span>Checkbox 1</span>
-          </label>
+          {page === 3 && (
+            <>
+              <ServicesContext.Provider value={{ services, dispatchServices }}>
+                <Services />
+              </ServicesContext.Provider>
+            </>
+          )}
 
-          <label className="cnr-label">
-            <input type="checkbox" />
-            <span>Checkbox with long label</span>
-          </label>
-
-          <h3>H3 inside the form</h3>
-          <div className="input-row">
-            <label className="cnr-label">
-              <input type="radio" name="radio-test" checked />
-              <span>Radio</span>
-            </label>
-            <label className="cnr-label">
-              <input type="radio" name="radio-test" />
-              <span>Radio with long label</span>
-            </label>
-          </div>
-
-          <hr />
-
-          <hr />
+          {page === 4 && <Final />}
         </main>
 
         {page < 4 && (
@@ -275,7 +270,7 @@ export default function App() {
                   const isError = validateTiles(tiles.tiles, tiles.safeTiles);
                   setTilesError(isError);
                   if (!isError) dispatchPage({ type: "increment" });
-                }
+                } else dispatchPage({ type: "increment" });
               }}
               className="btn"
               disabled={page === 4}

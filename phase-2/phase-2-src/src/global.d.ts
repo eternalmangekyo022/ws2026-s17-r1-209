@@ -12,9 +12,9 @@ declare global {
     postalCode: string;
     city: string;
     address: string;
-    openAt: "everyday" | "weekdays" | "weekend";
     from: string;
     to: string;
+    openAt: "everyday" | "weekdays" | "weekend";
   }
 
   type ITileFormats =
@@ -87,4 +87,17 @@ declare global {
     | TileErrorAction
     | TileModifyAction
     | TileEmptyAction;
+
+  interface IServices {
+    freeWiFi: boolean;
+    accessibleEntry: boolean;
+    loungeArea: boolean;
+    backgroundMusic: boolean;
+    costumerService: boolean;
+    parking: "Easy" | "Medium" | "Hard";
+  }
+
+  type ServicesReducerAction =
+    | { type: keyof IServices; payload: boolean }
+    | { type: "parking"; payload: string };
 }
