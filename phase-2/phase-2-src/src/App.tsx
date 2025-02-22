@@ -1,5 +1,6 @@
 import Header from "./components/Header";
 import { useReducer, useState, useRef, useEffect } from "react";
+import PageContext from "./context/page";
 //import HeaderContext from "./context/header.ts";
 
 import LayoutContext from "./context/layout";
@@ -47,13 +48,15 @@ export default function App() {
 
   function pageReducer(
     state: number,
-    action: { type: "increment" | "decrement" }
+    action: { type: "increment" | "decrement" | "reset" }
   ) {
     switch (action.type) {
       case "increment":
         return state === 4 ? state : state + 1;
       case "decrement":
         return state === 1 ? state : state - 1;
+      case "reset":
+        return 1;
       default:
         throw new Error("error");
     }
@@ -105,9 +108,15 @@ export default function App() {
 
   function formReducer(
     state: IFormState,
-    action: { type: keyof IFormState; payload: string }
+    action: { type: keyof IFormState | "reset"; payload: string }
   ) {
-    return { ...state, [action.type]: action.payload };
+    console.log(action.type);
+    switch (action.type) {
+      case "reset":
+        return Object.fromEntries(Object.entries(state).map(([k]) => [k, ""]));
+      default:
+        return { ...state, [action.type]: action.payload };
+    }
   }
 
   function initTiles(
@@ -244,7 +253,28 @@ export default function App() {
             </>
           )}
 
-          {page === 4 && <Final />}
+          {page === 4 && (
+            <>
+              <PageContext.Provider value={{ page, dispatchPage }}>
+                <RegisterContext.Provider
+                  value={{
+                    form,
+                    dispatchForm,
+                    errors: formErrors,
+                    setValidate,
+                    shouldFocus,
+                    validate,
+                  }}
+                >
+                  <ServicesContext.Provider
+                    value={{ services, dispatchServices }}
+                  >
+                    <Final />
+                  </ServicesContext.Provider>
+                </RegisterContext.Provider>
+              </PageContext.Provider>
+            </>
+          )}
         </main>
 
         {page < 4 && (

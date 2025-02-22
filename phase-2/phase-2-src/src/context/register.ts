@@ -18,7 +18,10 @@ export default createContext({
     postalCode: "",
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  dispatchForm: (_action: { type: keyof IFormState; payload: string }) => {},
+  dispatchForm: (_action: {
+    type: keyof IFormState | "reset";
+    payload: string;
+  }) => {},
 } as {
   errors: {
     current: { id: number; name: keyof IFormState }[];
@@ -27,5 +30,8 @@ export default createContext({
   setValidate: React.Dispatch<React.SetStateAction<boolean>>;
   shouldFocus: { id: number };
   form: IFormState;
-  dispatchForm: (action: { type: keyof IFormState; payload: string }) => void;
+  dispatchForm: (action: {
+    type: keyof IFormState | "reset";
+    payload: string;
+  }) => void;
 });
