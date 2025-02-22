@@ -1,6 +1,5 @@
 import Maximize from "../assets/maximize.svg";
 import Minimize from "../assets/minimize.svg";
-import Check from "../assets/check.svg";
 
 import Step from "../components/Step";
 import PageContext from "../context/page";

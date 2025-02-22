@@ -7,7 +7,11 @@ const data: PageContextType = {
 
 type PageContextType = {
   page: number;
-  dispatchPage: (action: { type: "increment" | "decrement" | "reset" }) => void;
+  dispatchPage: (
+    action:
+      | { type: "increment" | "decrement" | "reset" }
+      | { type: "set"; payload: number }
+  ) => void;
 };
 
 export default createContext(data);
