@@ -134,8 +134,8 @@ export default function App() {
           payload: {
             type: "empty",
             pos: {
-              x: x,
-              y: y,
+              x,
+              y,
             },
             id: `${x};${y}`,
             weight: 8,

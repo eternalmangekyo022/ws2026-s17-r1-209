@@ -94,10 +94,11 @@ Wall,-,Folding Table,Wall,-
       const { type } = tiles[i];
       const toAdd = getStringFromType(type, tiles[i].weight);
       final += `${toAdd}`;
-      if (i === tiles.length - 1) return final;
+      if (i === tiles.length - 1) break;
+      console.log(tiles[i].pos.x, tiles[i + 1].pos.x);
       final += tiles[i].pos.x > tiles[i + 1].pos.x ? "\n" : ",";
     }
-
+    console.log(final);
     return final;
   }
 
