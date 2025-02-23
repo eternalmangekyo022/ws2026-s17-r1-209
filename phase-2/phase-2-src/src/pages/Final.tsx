@@ -2,11 +2,13 @@ import { useContext } from "react";
 import ServicesContext from "../context/services";
 import RegisterContext from "../context/register";
 import PageContext from "../context/page";
+import LayoutContext from "../context/layout";
 
 export default function Final() {
-  const { services } = useContext(ServicesContext);
+  const { services, dispatchServices } = useContext(ServicesContext);
   const { form, dispatchForm } = useContext(RegisterContext);
   const { dispatchPage } = useContext(PageContext);
+  const { dispatchTiles } = useContext(LayoutContext);
 
   function copyToCB() {
     const {
@@ -53,6 +55,8 @@ export default function Final() {
   function reset() {
     dispatchPage({ type: "reset" });
     dispatchForm({ type: "reset", payload: "" });
+    dispatchTiles({ type: "resetAll" });
+    dispatchServices({ type: "reset" });
   }
 
   return (

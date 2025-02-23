@@ -20,7 +20,7 @@ export default function App() {
   const articleRef = useRef<HTMLElement>(null);
   const [wallChanged, setWallChanged] = useState(false);
   const [COLS, ROWS] = [5, 6];
-  const [page, dispatchPage] = useReducer(pageReducer, 2);
+  const [page, dispatchPage] = useReducer(pageReducer, 1);
   const [tiles, dispatchTiles] = useReducer(tilesReducer, {
     tiles: [],
     safeTiles: [],
@@ -89,6 +89,8 @@ export default function App() {
         };
       case "resetSafe":
         return { ...state, safeTiles: [] };
+      case "resetAll":
+        return { tiles: [], safeTiles: [] };
       default:
         return { tiles: [], safeTiles: [] }; // Return an object with empty arrays
     }
@@ -242,7 +244,17 @@ export default function App() {
                   <ServicesContext.Provider
                     value={{ services, dispatchServices }}
                   >
-                    <Final />
+                    <LayoutContext.Provider
+                      value={{
+                        tiles,
+                        dispatchTiles,
+                        dragging,
+                        setDragging,
+                        tilesError,
+                      }}
+                    >
+                      <Final />
+                    </LayoutContext.Provider>
                   </ServicesContext.Provider>
                 </RegisterContext.Provider>
               </PageContext.Provider>

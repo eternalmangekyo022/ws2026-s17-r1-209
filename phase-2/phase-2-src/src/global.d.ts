@@ -66,7 +66,7 @@ declare global {
   };
 
   type TileEmptyAction = {
-    type: "";
+    type: "" | "resetAll";
   };
 
   type SafeTileGeneralAction = {
@@ -99,5 +99,6 @@ declare global {
 
   type ServicesReducerAction =
     | { type: keyof IServices; payload: boolean }
-    | { type: "parking"; payload: string };
+    | { type: "parking"; payload: string }
+    | { type: "reset" };
 }
