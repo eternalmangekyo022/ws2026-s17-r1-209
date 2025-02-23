@@ -66,11 +66,8 @@ export default function Input({
     errors.current = errors.current.filter((i) => i.id !== id);
   };
 
-  useEffect(() => {
-    if (validate) forceValidate();
-  }, [validate]);
-
   async function validateInput(input: string): Promise<string> {
+    console.log("running validate");
     function check(): string {
       if (!input.trim()) return "Required";
       else if (input.length < min) return `Must be at least ${min} character`;
@@ -98,6 +95,10 @@ export default function Input({
   useEffect(() => {
     if (shouldFocus.id === id) inputRef.current?.focus();
   }, [id, shouldFocus]);
+
+  useEffect(() => {
+    if (validate) forceValidate();
+  }, [validate]);
 
   useEffect(() => {
     if (form[name].trim() === "") addError();

@@ -6,7 +6,7 @@ import LayoutContext from "../context/layout";
 
 export default function Final() {
   const { services, dispatchServices } = useContext(ServicesContext);
-  const { form, dispatchForm } = useContext(RegisterContext);
+  const { form, dispatchForm, setValidate } = useContext(RegisterContext);
   const { dispatchPage } = useContext(PageContext);
   const {
     tiles: { tiles },
@@ -95,10 +95,8 @@ Wall,-,Folding Table,Wall,-
       const toAdd = getStringFromType(type, tiles[i].weight);
       final += `${toAdd}`;
       if (i === tiles.length - 1) break;
-      console.log(tiles[i].pos.x, tiles[i + 1].pos.x);
       final += tiles[i].pos.x > tiles[i + 1].pos.x ? "\n" : ",";
     }
-    console.log(final);
     return final;
   }
 
@@ -120,6 +118,7 @@ Wall,-,Folding Table,Wall,-
     dispatchForm({ type: "reset", payload: "" });
     dispatchTiles({ type: "resetAll" });
     dispatchServices({ type: "reset" });
+    setValidate(false);
   }
 
   return (

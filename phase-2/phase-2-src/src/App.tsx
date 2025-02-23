@@ -25,7 +25,7 @@ export default function App() {
     tiles: [],
     safeTiles: [],
   });
-  const [form, dispatchForm] = useReducer(formReducer, {
+  const formDefault: IFormState = {
     name: "",
     description: "",
     postalCode: "",
@@ -34,7 +34,8 @@ export default function App() {
     from: "",
     to: "",
     openAt: "everyday",
-  });
+  };
+  const [form, dispatchForm] = useReducer(formReducer, formDefault);
   const [services, dispatchServices] = useReducer(servicesReducer, {
     freeWiFi: false,
     accessibleEntry: false,
@@ -159,14 +160,12 @@ export default function App() {
   }
 
   useEffect(() => {
-    console.info("app ran");
-    initTiles();
-    return () => {
-      dispatchTiles({ type: "" });
-      dispatchTiles({ type: "resetSafe" });
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    for (const [k] of Object.entries(form)) {
+      if (form[k as keyof IFormState] !== formDefault[k as keyof IFormState])
+        return;
+    }
+    setValidate(false);
+  }, [form]);
 
   useEffect(() => {
     if (wallChanged) {
@@ -185,6 +184,15 @@ export default function App() {
 
     if (tilesError && !isError) setTilesError(false);
   }, [tiles.tiles, tiles.safeTiles]);
+
+  useEffect(() => {
+    initTiles();
+    return () => {
+      dispatchTiles({ type: "" });
+      dispatchTiles({ type: "resetSafe" });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -285,7 +293,9 @@ export default function App() {
                     setShouldFocus({
                       id: Math.min(...formErrors.current.map((i) => i.id)),
                     });
-                  } else dispatchPage({ type: "increment" });
+                  } else {
+                    dispatchPage({ type: "increment" });
+                  }
                 } else if (page === 2) {
                   const isError = validateTiles(tiles.tiles, tiles.safeTiles);
                   setTilesError(isError);
