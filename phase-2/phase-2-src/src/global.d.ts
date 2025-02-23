@@ -32,7 +32,7 @@ declare global {
     type: ITileFormats;
     id: PosId | `rows-${string}`;
     weight?: 8 | 11 | 18 | 25;
-    pos?: {
+    pos: {
       x: number;
       y: number;
     };

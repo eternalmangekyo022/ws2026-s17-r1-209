@@ -8,7 +8,10 @@ export default function Final() {
   const { services, dispatchServices } = useContext(ServicesContext);
   const { form, dispatchForm } = useContext(RegisterContext);
   const { dispatchPage } = useContext(PageContext);
-  const { dispatchTiles } = useContext(LayoutContext);
+  const {
+    tiles: { tiles },
+    dispatchTiles,
+  } = useContext(LayoutContext);
 
   function copyToCB() {
     const {
@@ -52,6 +55,65 @@ export default function Final() {
     );
   }
 
+  /* ```csv
+Dryer (18 kg),-,Washer (11 kg),Washer (8 kg),Washer (8 kg)
+Dryer (25 kg),-,-,-,-
+Dryer (25 kg),-,Folding Table,Folding Table,-
+Wall,-,Folding Table,Wall,-
+-,-,-,-,-
+-,Entrance,Waiting Area,Waiting Area,Waiting Area
+``` */
+
+  function getStringFromType(
+    tileType: ITileFormats,
+    weight: number = 0
+  ): string {
+    switch (tileType) {
+      case "wall":
+        return "Wall";
+      case "table":
+        return "Folding Table";
+      case "empty":
+        return "-";
+      case "waiting":
+        return "Waiting Area";
+      case "entrance":
+        return "Entrance";
+      case "washer":
+        return `Washer (${weight} kg)`;
+      case "dryer":
+        return `Dryer (${weight} kg)`;
+      default:
+        return "";
+    }
+  }
+
+  function generateFloorPlan(): string {
+    let final = "";
+    for (let i = 0; i < tiles.length; i++) {
+      const { type } = tiles[i];
+      const toAdd = getStringFromType(type, tiles[i].weight);
+      final += `${toAdd}`;
+      if (i === tiles.length - 1) return final;
+      final += tiles[i].pos.x > tiles[i + 1].pos.x ? "\n" : ",";
+    }
+
+    return final;
+  }
+
+  function downloadFloorPlan() {
+    const generated = generateFloorPlan();
+    const blob = new Blob([generated], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "floorplan.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
   function reset() {
     dispatchPage({ type: "reset" });
     dispatchForm({ type: "reset", payload: "" });
@@ -66,7 +128,9 @@ export default function Final() {
       <button className="btn" onClick={copyToCB}>
         COPY FORM VALUES
       </button>
-      <button className="btn">EXPORT FLOORPLAN</button>
+      <button className="btn" onClick={downloadFloorPlan}>
+        EXPORT FLOORPLAN
+      </button>
       <hr />
       <button className="btn" onClick={reset}>
         START OVER
