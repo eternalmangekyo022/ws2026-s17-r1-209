@@ -103,28 +103,28 @@ export default function App() {
     for (let x = 1; x < ROWS + 1; x++) {
       for (let y = 1; y < COLS + 1; y++) {
         if (x === 1 || x === 6 || y === 1 || y === 5) {
-          dispatchTiles({ type: "addSafe", payload: { id: `${x};${y}` } });
+          dispatchTiles({ type: "addSafe", payload: { id: `${y};${x}` } });
         }
         if (safeOnly) {
           const wallHere = tiles.tiles.filter(
-            (i) => i.id === `${x};${y}` && i.type === "wall"
+            (i) => i.id === `${y};${x}` && i.type === "wall"
           );
           if (wallHere.length && wallHere[0].pos) {
             dispatchTiles({
               type: "addSafe",
-              payload: { id: `${x - 1};${y}` },
+              payload: { id: `${y - 1};${x}` },
             });
             dispatchTiles({
               type: "addSafe",
-              payload: { id: `${x + 1};${y}` },
+              payload: { id: `${y + 1};${x}` },
             });
             dispatchTiles({
               type: "addSafe",
-              payload: { id: `${x};${y - 1}` },
+              payload: { id: `${y};${x - 1}` },
             });
             dispatchTiles({
               type: "addSafe",
-              payload: { id: `${x};${y + 1}` },
+              payload: { id: `${y};${x + 1}` },
             });
           }
           continue;
@@ -134,8 +134,8 @@ export default function App() {
           payload: {
             type: "empty",
             pos: {
-              x,
-              y,
+              x: y,
+              y: x,
             },
             id: `${x};${y}`,
             weight: 8,
@@ -159,6 +159,7 @@ export default function App() {
   }
 
   useEffect(() => {
+    console.info("app ran");
     initTiles();
     return () => {
       dispatchTiles({ type: "" });
@@ -173,6 +174,10 @@ export default function App() {
       setWallChanged(false);
     }
   }, [wallChanged]);
+
+  useEffect(() => {
+    if (page === 2 && !tiles.tiles.length) initTiles();
+  }, [page]);
 
   useEffect(() => {
     if (!tiles.tiles.length || !tiles.safeTiles.length) return;
