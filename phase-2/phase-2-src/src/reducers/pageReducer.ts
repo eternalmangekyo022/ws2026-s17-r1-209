@@ -12,6 +12,7 @@ export default function pageReducer(
     case "reset":
       return 1;
     case "set":
+      console.log(action.payload);
       return action.payload;
     default:
       throw new Error("error");

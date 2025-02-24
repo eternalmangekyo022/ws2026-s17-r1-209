@@ -62,8 +62,6 @@ export default function TimeInput({ labelText, id, name }: Props) {
         if (Math.min(...errors.current.map((i) => i.id)) === id) {
           currentRef.current?.focus();
         }
-      } else {
-        removeError();
       }
     }
   }, [validate]);
@@ -74,7 +72,8 @@ export default function TimeInput({ labelText, id, name }: Props) {
 
   useEffect(() => {
     if (!currentRef.current?.value) addError();
-  }, []);
+    else removeError();
+  }, [currentRef.current?.value]);
 
   return (
     <div className="input-group">

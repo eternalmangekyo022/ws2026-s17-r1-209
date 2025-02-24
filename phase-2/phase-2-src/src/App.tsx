@@ -103,7 +103,13 @@ export default function App() {
   }
 
   function initTiles(
-    { safeOnly }: { safeOnly?: boolean } = { safeOnly: false }
+    {
+      safeOnly,
+      checkTiles = tiles.tiles,
+    }: { safeOnly?: boolean; checkTiles?: Tile[] } = {
+      safeOnly: false,
+      checkTiles: tiles.tiles,
+    }
   ) {
     dispatchTiles({ type: "resetSafe" });
     for (let x = 1; x < ROWS + 1; x++) {
@@ -112,7 +118,7 @@ export default function App() {
           dispatchTiles({ type: "addSafe", payload: { id: `${y};${x}` } });
         }
         if (safeOnly) {
-          const wallHere = tiles.tiles.filter(
+          const wallHere = checkTiles.filter(
             (i) => i.id === `${y};${x}` && i.type === "wall"
           );
           if (wallHere.length && wallHere[0].pos) {
@@ -157,7 +163,6 @@ export default function App() {
       JSON.stringify({
         form,
         services,
-        page,
       })
     );
     sessionStorage.setItem(savedTilesKey, JSON.stringify(tiles.tiles));
@@ -190,16 +195,18 @@ export default function App() {
   }, [tiles.tiles, tiles.safeTiles]);
 
   useEffect(() => {
+    if (tiles.tiles.length === ROWS * COLS) saveData();
+  }, [form, tiles.tiles, services, page]);
+
+  useEffect(() => {
     const saved = sessionStorage.getItem(savedKey);
     const savedTiles = sessionStorage.getItem(savedTilesKey);
 
     if (saved) {
       const parsed = JSON.parse(saved) as {
         form: IFormState;
-        page: number;
         services: IServices;
       };
-      dispatchPage({ type: "set", payload: page });
 
       Object.keys(services).forEach((key) => {
         if (key === "reset") dispatchServices({ type: "reset" });
@@ -232,9 +239,9 @@ export default function App() {
           },
         });
       }
-    }
+      initTiles({ checkTiles: parsed, safeOnly: true });
+    } else initTiles();
 
-    initTiles({ safeOnly: !!savedTiles });
     return () => {
       dispatchTiles({ type: "" });
       dispatchTiles({ type: "resetSafe" });
@@ -349,7 +356,6 @@ export default function App() {
                   if (isError) return;
                 }
                 dispatchPage({ type: "increment" });
-                saveData();
               }}
               className="btn"
               disabled={page === 4}

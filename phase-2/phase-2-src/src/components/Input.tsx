@@ -100,7 +100,8 @@ export default function Input({
   }, [validate]);
 
   useEffect(() => {
-    if (form[name].trim() === "") addError();
+    if (form[name].trim() === "" && inputRef.current?.value.trim() !== "")
+      addError();
   }, []);
 
   return textArea ? (
