@@ -259,6 +259,7 @@ p.fade-in {
 	font-size: 72px;
 	word-spacing: 0rem;
 	font-weight: 680;
+	z-index: 2;
 }
 
 #hero .title span {
@@ -281,6 +282,7 @@ p.fade-in {
 	align-items: center;
 	gap: 1.5rem;
 	transform: translateX(-50%);
+	z-index: 2;
 }
 
 #hero .info .links {
@@ -978,4 +980,88 @@ footer .circle::before {
 	top: 13.85%;
 	left: 50%;
 	transform: translateX(-50%);
+}
+
+.nav-wrapper .hamburger {
+	display: none;
+}
+
+@media (max-width: 496px) {
+	header {
+		height: 4.5rem;
+	}
+
+	.nav-wrapper>*:not(.icon-container) {
+		display: none;
+	}
+
+	.icon-container {
+		width: 35%;
+	}
+
+	.icon-container img {
+		width: 70%;
+		left: 30%;
+	}
+
+	.nav-wrapper .hamburger {
+		display: block;
+		width: 13%;
+		display: grid;
+		place-items: center;
+	}
+
+	#hero {
+		height: 45svh;
+	}
+
+	#hero span.title {
+		width: 90%;
+		font-size: 35px;
+		word-spacing: 1px;
+	}
+
+	#hero span.title span {
+		font-size: inherit;
+	}
+
+	#hero .circle:nth-child(1) {
+		display: none;
+	}
+
+	#hero::before {
+		display: none;
+	}
+
+	#hero .info {
+		width: 90%;
+		bottom: 22.4%;
+	}
+
+	#hero .info p {
+		font-size: 15px;
+	}
+
+	#hero .info .links {
+		width: 85%;
+	}
+
+	.btn {
+		padding: .6rem .9rem;
+		font-weight: 500;
+		font-size: 13px;
+	}
+
+	#hero .circle:nth-child(2) {
+		width: 38rem;
+		height: 40rem;
+		top: 40%;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	#hero .circle:nth-child(2)::before {
+		width: 70%;
+		height: 70%;
+	}
 }
