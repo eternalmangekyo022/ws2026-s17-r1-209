@@ -987,6 +987,14 @@ footer .circle::before {
 }
 
 @media (max-width: 496px) {
+	h1 {
+		font-size: 2rem;
+	}
+
+	h2 {
+		font-size: 1.3rem;
+	}
+
 	header {
 		height: 4.5rem;
 	}
@@ -1063,5 +1071,29 @@ footer .circle::before {
 	#hero .circle:nth-child(2)::before {
 		width: 70%;
 		height: 70%;
+	}
+
+	#about {
+		height: 45svh;
+	}
+
+	#about .about-title {
+		height: 30%;
+		margin-bottom: 5%;
+		gap: .5rem;
+	}
+
+	.about-title>* {
+		inset: 0;
+	}
+
+	.about-info {
+		width: 95%;
+		margin-bottom: 13%;
+	}
+
+	.about-info p {
+		font-size: 13.9px;
+		line-height: 1.2rem;
 	}
 }
