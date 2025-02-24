@@ -15,7 +15,7 @@ export default function TimeInput({ labelText, id, name }: Props) {
   const { validate, setValidate, errors, shouldFocus, form, dispatchForm } =
     useContext(RegisterContext);
 
-  async function validateInput(currentVal?: string): Promise<string> {
+  function validateInput(currentVal?: string): string {
     if (!fromRef.current || !toRef.current) return "";
     const toCheck =
       currentVal !== undefined ? currentVal : currentRef.current?.value;
@@ -24,55 +24,58 @@ export default function TimeInput({ labelText, id, name }: Props) {
     return "";
   }
 
-  async function handleOnChange(currentVal: string) {
-    dispatchForm({ type: name as keyof IFormState, payload: currentVal });
-    const validated = await validateInput(currentVal);
-    if (error) {
-      if (!validated) {
-        setError("");
-        setValidate(true);
-        removeError();
-      }
+  function handleOnChange(currentVal: string) {
+    dispatchForm({ type: name, payload: currentVal });
+    const validated = validateInput(currentVal);
+
+    if (validated) {
+      setError(validated);
+      addError();
+    } else {
+      setError("");
+      removeError();
     }
-    if (
-      (!!errors.current.filter((i) => i.id === 6).length ||
-        !!errors.current.filter((i) => i.id === 7).length) &&
-      error
-    ) {
+
+    if (errors.current.filter((i) => i.id === id).length && !validated) {
       setValidate(true);
-    } else addError();
+    }
   }
 
   const addError = () => {
-    console.log("added error");
-    const ids = errors.current.map((i) => i.id);
-    if (!ids.includes(id)) {
+    if (!errors.current.filter((i) => i.id === id).length) {
       errors.current = [...errors.current, { id, name }];
     }
   };
+
   const removeError = () => {
     errors.current = errors.current.filter((i) => i.id !== id);
   };
 
   useEffect(() => {
     if (validate) {
-      validateInput().then((validated) => {
-        setError(validated);
-        setValidate(false);
-        if (validated) {
-          addError();
-        } else removeError();
-        if (validated && Math.min(...errors.current.map((i) => i.id)) === id)
+      const validated = validateInput();
+      setError(validated);
+      setValidate(false);
+
+      if (validated) {
+        addError();
+        if (Math.min(...errors.current.map((i) => i.id)) === id) {
           currentRef.current?.focus();
-      });
+        }
+      } else {
+        removeError();
+      }
     }
   }, [validate]);
 
   useEffect(() => {
     if (shouldFocus.id === id) currentRef.current?.focus();
-  }, [id, shouldFocus]);
+  }, [shouldFocus]);
 
-  useEffect(() => addError(), []);
+  useEffect(() => {
+    if (!currentRef.current?.value) addError();
+  }, []);
+
   return (
     <div className="input-group">
       <label htmlFor={`input-${id}`}>{labelText}</label>

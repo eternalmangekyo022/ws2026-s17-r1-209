@@ -294,6 +294,7 @@ export default function App() {
                       id: Math.min(...formErrors.current.map((i) => i.id)),
                     });
                   } else {
+                    setShouldFocus({ id: -1 });
                     dispatchPage({ type: "increment" });
                   }
                 } else if (page === 2) {
