@@ -119,6 +119,8 @@ Wall,-,Folding Table,Wall,-
     dispatchTiles({ type: "resetAll" });
     dispatchServices({ type: "reset" });
     setValidate(false);
+    sessionStorage.removeItem("sudsy-data");
+    sessionStorage.removeItem("sudsy-data-tiles");
   }
 
   return (

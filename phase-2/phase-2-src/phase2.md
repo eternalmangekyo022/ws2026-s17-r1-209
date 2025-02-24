@@ -1,6 +1,6 @@
 ### 2.7 Data persistency
 
-Persist all form data** (including step progress and floorplan) upon page refresh.  
+**Persist all form data** (including step progress and floorplan) upon page refresh.  
 To support multiple forms in separate tabs, tie data persistence to the browser tab.
  
 ### 3.1 Clean Code

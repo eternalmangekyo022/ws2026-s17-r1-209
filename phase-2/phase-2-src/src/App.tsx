@@ -3,6 +3,8 @@ import { useReducer, useState, useRef, useEffect } from "react";
 import PageContext from "./context/page";
 //import HeaderContext from "./context/header.ts";
 
+import validateTiles from "./hooks/validateTiles";
+
 import LayoutContext from "./context/layout";
 import RegisterContext from "./context/register";
 import ServicesContext from "./context/services";
@@ -17,6 +19,9 @@ import Services from "./pages/Services";
 import Final from "./pages/Final";
 
 export default function App() {
+  const savedKey = "sudsy-data";
+  const savedTilesKey = "sudsy-data-tiles";
+
   const articleRef = useRef<HTMLElement>(null);
   const [wallChanged, setWallChanged] = useState(false);
   const [COLS, ROWS] = [5, 6];
@@ -146,17 +151,16 @@ export default function App() {
     }
   }
 
-  function validateTiles(_tiles: Tile[], _safeTiles: { id: PosId }[]): boolean {
-    for (let i = 0; i < _tiles.length; i++) {
-      const isSafe = !!_safeTiles.filter(
-        (safeTile) => safeTile.id === _tiles[i].id
-      ).length;
-      const isMachine = ["washer", "dryer"].includes(_tiles[i].type);
-      if (!isSafe && isMachine) {
-        return true;
-      }
-    }
-    return false;
+  function saveData() {
+    sessionStorage.setItem(
+      savedKey,
+      JSON.stringify({
+        form,
+        services,
+        page,
+      })
+    );
+    sessionStorage.setItem(savedTilesKey, JSON.stringify(tiles.tiles));
   }
 
   useEffect(() => {
@@ -186,7 +190,51 @@ export default function App() {
   }, [tiles.tiles, tiles.safeTiles]);
 
   useEffect(() => {
-    initTiles();
+    const saved = sessionStorage.getItem(savedKey);
+    const savedTiles = sessionStorage.getItem(savedTilesKey);
+
+    if (saved) {
+      const parsed = JSON.parse(saved) as {
+        form: IFormState;
+        page: number;
+        services: IServices;
+      };
+      dispatchPage({ type: "set", payload: page });
+
+      Object.keys(services).forEach((key) => {
+        if (key === "reset") dispatchServices({ type: "reset" });
+        else
+          dispatchServices({
+            type: key as keyof IServices,
+            payload: parsed.services[key as keyof IServices] as boolean,
+          });
+      });
+
+      Object.keys(form).forEach((key) => {
+        dispatchForm({
+          type: key as keyof IFormState,
+          payload: parsed.form[key as keyof IFormState] as string,
+        });
+      });
+    }
+
+    if (savedTiles) {
+      const parsed = JSON.parse(savedTiles) as Tile[];
+
+      for (let i = 0; i < parsed.length; i++) {
+        dispatchTiles({
+          type: "add",
+          payload: {
+            id: parsed[i].id as PosId,
+            pos: parsed[i].pos,
+            type: parsed[i].type as ITileFormats,
+            weight: parsed[i].weight as 8 | 11 | 18 | 25,
+          },
+        });
+      }
+    }
+
+    initTiles({ safeOnly: !!savedTiles });
     return () => {
       dispatchTiles({ type: "" });
       dispatchTiles({ type: "resetSafe" });
@@ -293,15 +341,15 @@ export default function App() {
                     setShouldFocus({
                       id: Math.min(...formErrors.current.map((i) => i.id)),
                     });
-                  } else {
-                    setShouldFocus({ id: -1 });
-                    dispatchPage({ type: "increment" });
-                  }
+                    return;
+                  } else setShouldFocus({ id: -1 });
                 } else if (page === 2) {
                   const isError = validateTiles(tiles.tiles, tiles.safeTiles);
                   setTilesError(isError);
-                  if (!isError) dispatchPage({ type: "increment" });
-                } else dispatchPage({ type: "increment" });
+                  if (isError) return;
+                }
+                dispatchPage({ type: "increment" });
+                saveData();
               }}
               className="btn"
               disabled={page === 4}
