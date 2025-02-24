@@ -59,16 +59,16 @@ export default function Layout() {
         </div>
       )}
       <div className="grid">
-        {tiles.tiles.map(({ id, type, pos, weight }, idx) => (
+        {tiles.tiles.map(({ id, type, pos, weight }) => (
           <>
             {(type === "washer" || type === "dryer") && (
-              <Tile id={id} key={idx} type={type} weight={weight} pos={pos} />
+              <Tile id={id} key={id} type={type} weight={weight} pos={pos} />
             )}
             {["table", "waiting", "empty", "entrance", "wall"].includes(
               type
             ) && (
               <>
-                <Tile id={id} key={idx} type={type} pos={pos} />
+                <Tile id={id} key={id} type={type} pos={pos} />
               </>
             )}
           </>
