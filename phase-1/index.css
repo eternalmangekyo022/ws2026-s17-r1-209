@@ -29,7 +29,7 @@ strong {
 body {
 	width: 100svw;
 	height: 110svh;
-	overflow-x: none;
+	overflow-x: hidden;
 }
 
 header {
