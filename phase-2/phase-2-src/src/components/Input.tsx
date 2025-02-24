@@ -67,7 +67,6 @@ export default function Input({
   };
 
   async function validateInput(input: string): Promise<string> {
-    console.log("running validate");
     function check(): string {
       if (!input.trim()) return "Required";
       else if (input.length < min) return `Must be at least ${min} character`;

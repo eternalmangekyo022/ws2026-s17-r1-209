@@ -52,9 +52,11 @@ export default function TimeInput({ labelText, id, name }: Props) {
         setValidate(true);
         removeError();
       }
-    } else if (
-      !!errors.current.filter((i) => i.id === 6).length ||
-      !!errors.current.filter((i) => i.id === 7).length
+    }
+    if (
+      (!!errors.current.filter((i) => i.id === 6).length ||
+        !!errors.current.filter((i) => i.id === 7).length) &&
+      error
     ) {
       setValidate(true);
     } else addError();
