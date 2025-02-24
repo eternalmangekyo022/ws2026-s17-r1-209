@@ -15,31 +15,12 @@ export default function TimeInput({ labelText, id, name }: Props) {
   const { validate, setValidate, errors, shouldFocus, form, dispatchForm } =
     useContext(RegisterContext);
 
-  function validateTimes(_smaller: string, _bigger: string): boolean {
-    const [smh, smm]: number[] = _smaller.split(":").map(Number);
-    const [bgh, bgm]: number[] = _bigger.split(":").map(Number);
-
-    //everythin called smaller and bigger is referring to how it SHOULD be, not how it is
-    // eg. smaller hour is from input's hour
-    //return false if:
-    // bigger hour is smaller than smaller hour
-    // OR
-    // bigger hour is same as smaller BUT smaller minute is bigger than bigger minute
-    // else true
-    return !(smh > bgh || (smh === bgh && smm > bgm));
-  }
-
   async function validateInput(currentVal?: string): Promise<string> {
     if (!fromRef.current || !toRef.current) return "";
     const toCheck =
       currentVal !== undefined ? currentVal : currentRef.current?.value;
 
     if (!toCheck) return "Field required";
-    else if (
-      id === 6 &&
-      !validateTimes(fromRef.current.value, toRef.current.value)
-    )
-      return '"From" has to be earlier than "To"';
     return "";
   }
 
@@ -63,6 +44,7 @@ export default function TimeInput({ labelText, id, name }: Props) {
   }
 
   const addError = () => {
+    console.log("added error");
     const ids = errors.current.map((i) => i.id);
     if (!ids.includes(id)) {
       errors.current = [...errors.current, { id, name }];
