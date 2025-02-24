@@ -135,6 +135,7 @@ export default memo(function Tile({
       onDrop={handleDrop}
       onContextMenu={(e) => handleContextMenu(e)}
       style={{ opacity: isHovered ? 0.25 : 0.75 }}
+      key={id}
     >
       {!["empty", "entrance", "wall"].includes(type) && (
         <>
