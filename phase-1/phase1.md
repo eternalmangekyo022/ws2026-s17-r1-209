@@ -9,15 +9,6 @@ On mobile view, a hamburger menu is used to save up space in the header.
 - The menu can be **closed** by **clicking the `X` button or by clicking outside the menu** _(on the blurred background)_.
 - Please keep in mind, that you are **not** allowed to use JavaScript in this phase.
 
-#### 1.2.5 Why Us section
-
-- Features a **title** and four **cards** arranged:
-  - In a 2x2 grid on desktop.
-  - In a single column on mobile.
-- Hovering over a card **scales up** the icon without affecting other elements.
-
-#### 1.2.6 Download section
-
 #### 1.2.7 Highlighted Locations section
 
 - The cards display the highlighted locations in a **row**
