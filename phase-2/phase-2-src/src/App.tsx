@@ -115,7 +115,7 @@ export default function App() {
     for (let x = 1; x < ROWS + 1; x++) {
       for (let y = 1; y < COLS + 1; y++) {
         if (x === 1 || x === 6 || y === 1 || y === 5) {
-          dispatchTiles({ type: "addSafe", payload: { id: `${y};${x}` } });
+          dispatchTiles({ type: "addSafe", payload: { id: `${x};${y}` } });
         }
         if (safeOnly) {
           const wallHere = checkTiles.filter(
@@ -149,7 +149,7 @@ export default function App() {
               x: y,
               y: x,
             },
-            id: `${x};${y}`,
+            id: `${y};${x}`,
             weight: 8,
           },
         });
