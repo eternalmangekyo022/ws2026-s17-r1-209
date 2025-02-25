@@ -1122,7 +1122,7 @@ footer .circle::before {
 		flex-direction: column;
 		height: 105svh;
 		top: 7%;
-		gap: max(14%, 6rem);
+		gap: max(14%, 8rem);
 	}
 
 	#how-it-works .how-showcase .card {

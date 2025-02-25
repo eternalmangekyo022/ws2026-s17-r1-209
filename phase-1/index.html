@@ -12,16 +12,20 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 	<link rel="canonical" href="https://bluesource.netlify.app/phase-1">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Sudsy - A revolutionized laundromat franchise in Hungary">
+	<meta name="twitter:description" content="Effortlessly manage your laundromat visits with our AI-powered app!">
+	<meta name="twitter:image" content="./assets/images/laundromat.png">
 	<title>Sudsy</title>
 </head>
 
 <body>
-	<header>
+	<header role="banner">
 		<div class="nav-wrapper">
 			<div class='icon-container'>
 				<img src="./assets/images/sudsy-logo.svg" alt="Sudsy Icon">
 			</div>
-			<nav>
+			<nav aria-label="Main navigation" role="navigation">
 				<a href="#about">About</a>
 				<a href="#how-it-works">How it Works</a>
 				<a href="#why-us">Why Sudsy</a>
@@ -29,19 +33,19 @@
 			</nav>
 			<div class='dl-login'>
 				<a href="#download" class='download-btn'>Download</a>
-				<button class='btn blue'>Log In</button>
+				<button class='btn blue' aria-label="Log in to your account">Log In</button>
 			</div>
 			<div class="hamburger">
 				<img src="./assets/images/hamburger-icon.svg" alt="">
 			</div>
 		</div>
 	</header>
-	<main>
-		<section id='hero'>
+	<main role="main">
+		<section id='hero' aria-labelledby="hero-heading">
 			<div class="circle"></div>
 			<div class="circle"></div>
-			<span class="title fade-in">Laundry Done Smarter
-				<span>with AI</span>
+			<span id="hero-heading" class="title fade-in">Laundry Done Smarter
+				<span id="hero-heading">with AI</span>
 			</span>
 			<div class="info">
 				<p class='fade-in'>Effortlessly manage your laundromat visits with our cutting-edge app and modernized
@@ -54,11 +58,11 @@
 			</div>
 		</section>
 
-		<section id='about'>
+		<section id='about' aria-labelledby="about-heading">
 			<img src="./assets/images/laundromat-with-girl-legs.png" alt="How our laundromats look like">
 			<div class='about-title'>
 				<h2>WHO WE ARE</h2>
-				<h1>About Sudsy</h1>
+				<h1 id='about-heading'>About Sudsy</h1>
 			</div>
 			<div class='about-info'>
 				<p>Sudsy is <strong>Hungary's</strong> first fully connected laundromat franchise, designed to make
@@ -75,22 +79,22 @@
 			</div>
 		</section>
 
-		<section id="how-it-works">
+		<section id="how-it-works" aria-labelledby="how-title">
 			<div class="how-title">
 				<h2>HOW IT WORKS</h2>
-				<h1 class='white'>How to Use it?</h1>
+				<h1 class='white' id='how-title'>How to Use it?</h1>
 				<h3>Three Simple Steps to Cleaner Clothes</h3>
 			</div>
 			<div class="how-showcase">
-				<div class="card">
+				<article class="card" aria-labelledby="how-card-1">
 					<div class="card-number">1</div>
 					<div class="card-inner"></div>
 					<img src="" alt="" class="card-image">
 					<div class="description">
-						<p class="card-description">Find the nearest Sudsy laundromat via the app.</p>
+						<p class="card-description" id="how-card-1">Find the nearest Sudsy laundromat via the app.</p>
 					</div>
-				</div>
-				<div class="card">
+				</article>
+				<article aria-labelledby="how-card-2" class="card">
 					<div class="card-number">2</div>
 					<div class="card-inner">
 						<div class="card-inner-container">
@@ -114,10 +118,10 @@
 						</div>
 					</div>
 					<div class="description">
-						<p class="card-description">Pick a machine and a time that works for you.</p>
+						<p class="card-description" id="how-card-2">Pick a machine and a time that works for you.</p>
 					</div>
-				</div>
-				<div class="card">
+				</article>
+				<article class="card" aria-labelledby="how-card-3">
 					<div class="card-number">3</div>
 					<svg class='rotate' width="91" height="91" viewBox="0 0 91 91" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M11.375 22.75H22.75" stroke="#3d81db" stroke-width="3" stroke-linecap="round"
@@ -140,58 +144,56 @@
 						Start
 					</button>
 					<div class="description">
-						<p class="card-description">Start your machine and get notified when it's done.</p>
+						<p class="card-description" id="how-card-3">Start your machine and get notified when it's done.</p>
 					</div>
-				</div>
+					</artic>
 			</div>
 			<div class="how-buttons">
-				<button class='btn blue'>Download</button>
-				<button class='btn gray'>Locations</button>
+				<button class='btn blue' aria-label="Download the app">Download</button>
+				<button class='btn gray' aria-label="View all locations">Locations</button>
 			</div>
 		</section>
 
-		<section id="why-us">
+		<section id="why-us" aria-labelledby="why-title">
 			<div class="why-info">
 				<h2>WHY US?</h2>
-				<h1>Why Choose Sudsy?</h1>
+				<h1 id="why-title">Why Choose Sudsy?</h1>
 				<h3>Our platform helps your wash your clothes. These are some of the reasons why you should use our
 					services.</h3>
 			</div>
-			<div class="why-reasons">
-				<div class="reason">
+			<ul class="why-reasons">
+				<li class="reason" aria-labelledby="reason-1 reason-1-description">
 					<div class="reason-image">
 						<img src="./assets/images/mobile-icon.svg" alt="Mobile icon">
 					</div>
-					<h1>Next-Gen Mobile App</h1>
-					<h3>Book machines, track progress, and pay&mdash;all from your smartphone.</h3>
-				</div>
-				<div class="reason">
+					<h1 id="reason-1">Next-Gen Mobile App</h1>
+					<h3 id="reason-1-description">Book machines, track progress, and pay&mdash;all from your smartphone.</h3>
+				</li>
+				<li class="reason" aria-labelledby="reason-2 reason-2-description">
 					<div class="reason-image">
 						<img src="./assets/images/brain-icon.svg" alt="Brain icon">
 					</div>
-					<h1>AI Recommendations</h1>
-					<h3>Snap a photo of your clothes and let our AI suggest the best wash and dry settings.</h3>
-				</div>
-				<div class="reason">
+					<h1 id="reason-2">AI Recommendations</h1>
+					<h3 id="reason-2-description">Snap a photo of your clothes and let our AI suggest the best wash and dry
+						settings.</h3>
+				</li>
+				<li class="reason" aria-labelledby="reason-3 reason-3-description">
 					<div class="reason-image">
 						<img src="./assets/images/faceid-icon.svg" alt="FaceId icon">
 					</div>
-					<h1>Modernized Experience</h1>
-					<h3>Say goodbye to waiting and hello to efficiency with smart systems designed for convenience.</h3>
-				</div>
-				<div class="reason">
+					<h1 id="reason-3">Modernized Experience</h1>
+					<h3 id="reason-3-description">Say goodbye to waiting and hello to efficiency with smart systems designed for
+						convenience.</h3>
+				</li>
+				<li class="reason" aria-labelledby="reason-4 reason-4-description">
 					<div class="reason-image">
 						<img src="./assets/images/leaf-icon.svg" alt="Leaf icon">
 					</div>
-					<h1>Eco-Friendly</h1>
-					<h3>Optimize your laundry process to save time, energy, and money.</h3>
-				</div>
-			</div>
+					<h1 id="reason-4">Eco-Friendly</h1>
+					<h3 id="reason-4-description">Optimize your laundry process to save time, energy, and money.</h3>
+				</li>
+			</ul>
 		</section>
-
-		<style>
-
-		</style>
 
 		<section id="download">
 			<div class="info-container">
@@ -200,9 +202,10 @@
 				</h1>
 				<h3>Your perfect laundry experience is just a tap away&mdash;download the Sudsy app now on the App Store
 					or Google Play.</h3>
-				<div class="buttons">
-					<button><img src="./assets/images/app-store-download.png" alt="Download from the App Store"></button>
-					<button><img src="./assets/images/google-play-download.png"
+				<div class="buttons" role="group">
+					<button aria-label="Download from the App Store"><img src="./assets/images/app-store-download.png"
+							alt="Download from the App Store"></button>
+					<button aria-label="Download from Google Play"><img src="./assets/images/google-play-download.png"
 							alt="Download from the Google Play Store"></button>
 				</div>
 			</div>
@@ -216,11 +219,11 @@
 				<h2>WHERE ARE WE?</h2>
 				<h1>Highlighted Locations</h1>
 			</div>
-			<div class='locations-cards'>
-				<div class="card-wrapper">
-					<div class="card">
+			<ul class='locations-cards'>
+				<li class="card-wrapper">
+					<div class="card" aria-describedby="szeged">
 						<dl class='info'>
-							<dt>Szeged Riverside</dt>
+							<dt id="szeged">Szeged Riverside</dt>
 							<dd>Description: Enjoy a relaxing view of the Tisza River while your laundry gets done. Our
 								eco-friendly machines and cozy seating area make this a customer favorite.</dd>
 						</dl>
@@ -229,11 +232,11 @@
 							<span class='address-street'>Fő utca 121</span>
 						</div>
 					</div>
-				</div>
-				<div class="card-wrapper">
-					<div class="card">
+				</li>
+				<li class="card-wrapper">
+					<div class="card" aria-describedby="budapest">
 						<dl class='info'>
-							<dt>Budapest Central</dt>
+							<dt id='budapest'>Budapest Central</dt>
 							<dd>Located in the heart of Budapest, this flagship Sudsy location features 24/7
 								availability and the latest high-efficiency washers and dryers. Perfect for busy
 								professionals and students alike.</dd>
@@ -243,11 +246,11 @@
 							<span class='address-street'>Kossuth Lajos utca 662</span>
 						</div>
 					</div>
-				</div>
-				<div class="card-wrapper">
-					<div class="card">
+				</li>
+				<li class="card-wrapper">
+					<div class="card" aria-describedby="debrecen">
 						<dl class='info'>
-							<dt>Debrecen West End</dt>
+							<dt id='debrecen'>Debrecen West End</dt>
 							<dd>A convenient spot for locals, this Sudsy branch offers a spacious, clean environment
 								with
 								easy parking and quick access to nearby shops.</dd>
@@ -257,17 +260,17 @@
 							<span class='address-street'>Nyíri utca 992</span>
 						</div>
 					</div>
-				</div>
-			</div>
+				</li>
+			</ul>
 			<button class="btn blue">View all locations</button>
 		</section>
 	</main>
-	<footer>
+	<footer role="contentinfo">
 		<section class="footer-container">
 			<div class="footer image-container">
 				<img src="./assets/images/sudsy-logo.svg" alt="Sudsy Icon">
 			</div>
-			<nav aria-label="Footer links" class="footer links-container">
+			<nav aria-label="Footer links" class="footer links-container" role="navigation">
 				<a href="">Privacy Policy</a>
 				<div class="links-separator"></div>
 				<a href="">Terms & Conditions</a>
