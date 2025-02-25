@@ -1107,7 +1107,7 @@ footer .circle::before {
 	}
 
 	#hero {
-		height: 45svh;
+		height: max(25rem, 45svh);
 	}
 
 	#hero h1.title {
@@ -1161,7 +1161,7 @@ footer .circle::before {
 	}
 
 	#about {
-		height: 45svh;
+		height: max(25rem, 45svh);
 	}
 
 	#about .about-title {
@@ -1185,7 +1185,7 @@ footer .circle::before {
 	}
 
 	#how-it-works {
-		height: 150svh;
+		height: max(70rem, 150svh);
 	}
 
 	#how-it-works .how-title {
@@ -1257,7 +1257,7 @@ footer .circle::before {
 		flex-direction: column;
 		justify-content: start;
 		align-items: center;
-		height: 90svh;
+		height: max(50rem, 90svh);
 		overflow-x: hidden;
 	}
 
@@ -1314,6 +1314,7 @@ footer .circle::before {
 	#download {
 		display: flex;
 		flex-direction: column;
+		height: max(40rem, 45svh);
 	}
 
 	#download .info-container,
@@ -1379,7 +1380,7 @@ footer .circle::before {
 	}
 
 	#locations {
-		height: 63svh;
+		height: max(63svh, 40rem);
 		overflow-x: hidden;
 	}
 
