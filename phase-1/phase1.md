@@ -17,7 +17,6 @@ On mobile view, a hamburger menu is used to save up space in the header.
 ### 1.3 Responsiveness
 
 - Implement responsive design techniques to ensure the website looks appealing across **all screen sizes.**
-- The design is provided for **two specific viewports**: `1440px` and `402px`. We will use these viewports to assess your work.
 - **The page should also work seamlessly on other screen sizes.** When shrinking, the elements should not stick to the edge of the screen, and the text should not overflow. The content should be in a **container**, so enlarging the screen keeps the size.
 - Use relative size units, so changing the font size in the browser settings also shrinks/enlarges the content accordingly.
 
