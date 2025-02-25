@@ -10,7 +10,12 @@ export default memo(function Tile({
   id,
   pos = { x: 0, y: 0 },
 }: Tile) {
-  const { dispatchTiles, dragging, setDragging } = useContext(LayoutContext);
+  const {
+    dispatchTiles,
+    dragging,
+    setDragging,
+    tiles: { safeTiles },
+  } = useContext(LayoutContext);
 
   const [image, setImage] = useState<{ img: string | null; alt: string }>({
     img: null,
@@ -150,6 +155,7 @@ export default memo(function Tile({
           </span>
         </>
       )}
+      {safeTiles.filter((i) => i.id === id).length > 0 && <span>Safe</span>}
       {type === "wall" && <span>Wall</span>}
     </div>
   );

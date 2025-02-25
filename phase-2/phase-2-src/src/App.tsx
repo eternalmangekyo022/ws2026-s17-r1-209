@@ -112,31 +112,31 @@ export default function App() {
     }
   ) {
     dispatchTiles({ type: "resetSafe" });
-    for (let x = 1; x < ROWS + 1; x++) {
-      for (let y = 1; y < COLS + 1; y++) {
-        if (x === 1 || x === 6 || y === 1 || y === 5) {
+    for (let x = 1; x < COLS + 1; x++) {
+      for (let y = 1; y < ROWS + 1; y++) {
+        if (x === 1 || x === 5 || y === 1 || y === 6) {
           dispatchTiles({ type: "addSafe", payload: { id: `${x};${y}` } });
         }
         if (safeOnly) {
           const wallHere = checkTiles.filter(
-            (i) => i.id === `${y};${x}` && i.type === "wall"
+            (i) => i.id === `${x};${y}` && i.type === "wall"
           );
           if (wallHere.length && wallHere[0].pos) {
             dispatchTiles({
               type: "addSafe",
-              payload: { id: `${y - 1};${x}` },
+              payload: { id: `${x - 1};${y}` },
             });
             dispatchTiles({
               type: "addSafe",
-              payload: { id: `${y + 1};${x}` },
+              payload: { id: `${x + 1};${y}` },
             });
             dispatchTiles({
               type: "addSafe",
-              payload: { id: `${y};${x - 1}` },
+              payload: { id: `${x};${y - 1}` },
             });
             dispatchTiles({
               type: "addSafe",
-              payload: { id: `${y};${x + 1}` },
+              payload: { id: `${x};${y + 1}` },
             });
           }
           continue;
@@ -149,7 +149,7 @@ export default function App() {
               x: y,
               y: x,
             },
-            id: `${y};${x}`,
+            id: `${x};${y}`,
             weight: 8,
           },
         });
