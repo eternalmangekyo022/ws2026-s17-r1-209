@@ -20,12 +20,12 @@
 </head>
 
 <body>
-	<header role="banner">
+	<header>
 		<div class="nav-wrapper">
 			<div class='icon-container'>
 				<img src="./assets/images/sudsy-logo.svg" alt="Sudsy Icon">
 			</div>
-			<nav aria-label="Main navigation" role="navigation">
+			<nav aria-label="Main navigation">
 				<a href="#about">About</a>
 				<a href="#how-it-works">How it Works</a>
 				<a href="#why-us">Why Sudsy</a>
@@ -40,13 +40,13 @@
 			</div>
 		</div>
 	</header>
-	<main role="main">
-		<section id='hero' aria-labelledby="hero-heading">
+	<main>
+		<section id='hero' aria-labelledby="hero-heading hero-heading-span">
 			<div class="circle"></div>
 			<div class="circle"></div>
-			<span id="hero-heading" class="title fade-in">Laundry Done Smarter
-				<span id="hero-heading">with AI</span>
-			</span>
+			<h1 id="hero-heading" class="title fade-in">Laundry Done Smarter
+				<span id="hero-heading-span">with AI</span>
+			</h1>
 			<div class="info">
 				<p class='fade-in'>Effortlessly manage your laundromat visits with our cutting-edge app and modernized
 					system&mdash;now
@@ -86,15 +86,14 @@
 				<h3>Three Simple Steps to Cleaner Clothes</h3>
 			</div>
 			<div class="how-showcase">
-				<article class="card" aria-labelledby="how-card-1">
+				<div class="card" aria-labelledby="how-card-1">
 					<div class="card-number">1</div>
 					<div class="card-inner"></div>
-					<img src="" alt="" class="card-image">
 					<div class="description">
 						<p class="card-description" id="how-card-1">Find the nearest Sudsy laundromat via the app.</p>
 					</div>
-				</article>
-				<article aria-labelledby="how-card-2" class="card">
+				</div>
+				<div aria-labelledby="how-card-2" class="card">
 					<div class="card-number">2</div>
 					<div class="card-inner">
 						<div class="card-inner-container">
@@ -120,8 +119,8 @@
 					<div class="description">
 						<p class="card-description" id="how-card-2">Pick a machine and a time that works for you.</p>
 					</div>
-				</article>
-				<article class="card" aria-labelledby="how-card-3">
+				</div>
+				<div class="card" aria-labelledby="how-card-3">
 					<div class="card-number">3</div>
 					<svg class='rotate' width="91" height="91" viewBox="0 0 91 91" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M11.375 22.75H22.75" stroke="#3d81db" stroke-width="3" stroke-linecap="round"
@@ -146,7 +145,7 @@
 					<div class="description">
 						<p class="card-description" id="how-card-3">Start your machine and get notified when it's done.</p>
 					</div>
-					</artic>
+				</div>
 			</div>
 			<div class="how-buttons">
 				<button class='btn blue' aria-label="Download the app">Download</button>
@@ -198,7 +197,7 @@
 		<section id="download" aria-labelledby="download-title">
 			<div class="info-container">
 				<h2>DOWNLOAD OUR APP!</h2>
-				<h1 class='white' id="download-title">Your Laundry, <p>Simplified</p>
+				<h1 class='white' id="download-title">Your Laundry, <span>Simplified</span>
 				</h1>
 				<h3>Your perfect laundry experience is just a tap away&mdash;download the Sudsy app now on the App Store
 					or Google Play.</h3>
@@ -228,8 +227,8 @@
 								eco-friendly machines and cozy seating area make this a customer favorite.</dd>
 						</dl>
 						<div class='address'>
-							<span class="address-city" aria-label="City of location"><strong>6723 Szeged</strong></span>
-							<span class='address-street' aria-label="Address of location">Fő utca 121</span>
+							<span class="address-city"><strong>6723 Szeged</strong></span>
+							<span class='address-street'>Fő utca 121</span>
 						</div>
 					</div>
 				</li>
@@ -242,8 +241,8 @@
 								professionals and students alike.</dd>
 						</dl>
 						<div class='address'>
-							<span class="address-city" aria-label="City of location"><strong>1051 Budapest</strong></span>
-							<span class='address-street' aria-label="Address of location">Kossuth Lajos utca 662</span>
+							<span class="address-city"><strong>1051 Budapest</strong></span>
+							<span class='address-street'>Kossuth Lajos utca 662</span>
 						</div>
 					</div>
 				</li>
@@ -256,8 +255,8 @@
 								easy parking and quick access to nearby shops.</dd>
 						</dl>
 						<div class="address">
-							<span class="address-city" aria-label="City of location"><strong>4027 Debrecen</strong></span>
-							<span class='address-street' aria-label="Address of location">Nyíri utca 992</span>
+							<span class="address-city"><strong>4027 Debrecen</strong></span>
+							<span class='address-street'>Nyíri utca 992</span>
 						</div>
 					</div>
 				</li>
@@ -265,12 +264,12 @@
 			<button class="btn blue" aria-label="View all locations">View all locations</button>
 		</section>
 	</main>
-	<footer role="contentinfo">
-		<section class="footer-container">
+	<footer>
+		<div class="footer-container">
 			<div class="footer image-container">
 				<img src="./assets/images/sudsy-logo.svg" alt="Sudsy Icon">
 			</div>
-			<nav aria-label="Footer links" class="footer links-container" role="navigation">
+			<nav aria-label="Footer links" class="footer links-container">
 				<a href="">Privacy Policy</a>
 				<div class="links-separator"></div>
 				<a href="">Terms & Conditions</a>
@@ -278,7 +277,7 @@
 				<a href="">Cookie Policy</a>
 			</nav>
 			<span class="footer trademark-container">© SkillsIT 2025</span>
-		</section>
+		</div>
 		<div class="circle"></div>
 	</footer>
 </body>

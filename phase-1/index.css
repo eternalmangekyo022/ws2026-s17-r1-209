@@ -258,7 +258,7 @@ p.fade-in {
 	letter-spacing: -1.9px;
 	text-align: center;
 	height: 50%;
-	max-width: 50rem;
+	width: clamp(54rem, 60%, 57rem);
 	font-size: 72px;
 	word-spacing: 0rem;
 	font-weight: 680;
@@ -408,7 +408,6 @@ p.fade-in {
 	width: 100%;
 	height: 100%;
 	z-index: -1;
-	scale: 1;
 	top: -1%;
 	object-fit: cover;
 }
@@ -498,7 +497,7 @@ p.fade-in {
 
 @keyframes rotate-svg {
 	to {
-		rotate: 360deg;
+		transform: rotate(360deg);
 	}
 }
 
@@ -694,7 +693,7 @@ p.fade-in {
 }
 
 .why-reasons .reason:hover .reason-image {
-	zoom: 1.2;
+	transform: translateY(-50%) scale(1.2);
 	transform-origin: center;
 }
 
@@ -1030,13 +1029,13 @@ footer .circle::before {
 		height: 45svh;
 	}
 
-	#hero span.title {
+	#hero h1.title {
 		width: 90%;
 		font-size: 35px;
 		word-spacing: 1px;
 	}
 
-	#hero span.title span {
+	#hero h1.title span {
 		font-size: inherit;
 	}
 
@@ -1133,7 +1132,7 @@ footer .circle::before {
 	}
 
 	#how-it-works .how-showcase .card .card-inner-container {
-		scale: 1.1
+		transform: scale(1.1)
 	}
 
 	.how-showcase .card .dummy-button {
@@ -1310,7 +1309,6 @@ footer .circle::before {
 		justify-content: space-around;
 		gap: 0;
 		scroll-snap-type: x mandatory;
-		-ms-overflow-style: none;
 		scrollbar-width: none;
 	}
 
