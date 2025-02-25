@@ -112,9 +112,9 @@ export default function App() {
     }
   ) {
     dispatchTiles({ type: "resetSafe" });
-    for (let x = 1; x < COLS + 1; x++) {
-      for (let y = 1; y < ROWS + 1; y++) {
-        if (x === 1 || x === 5 || y === 1 || y === 6) {
+    for (let x = 1; x < ROWS + 1; x++) {
+      for (let y = 1; y < COLS + 1; y++) {
+        if (x === 1 || x === 6 || y === 1 || y === 5) {
           dispatchTiles({ type: "addSafe", payload: { id: `${x};${y}` } });
         }
         if (safeOnly) {
@@ -146,8 +146,8 @@ export default function App() {
           payload: {
             type: "empty",
             pos: {
-              x: y,
-              y: x,
+              x,
+              y,
             },
             id: `${x};${y}`,
             weight: 8,
@@ -182,10 +182,6 @@ export default function App() {
       setWallChanged(false);
     }
   }, [wallChanged]);
-
-  useEffect(() => {
-    if (page === 2 && !tiles.tiles.length) initTiles();
-  }, [page]);
 
   useEffect(() => {
     if (!tiles.tiles.length || !tiles.safeTiles.length) return;
@@ -240,7 +236,10 @@ export default function App() {
         });
       }
       initTiles({ checkTiles: parsed, safeOnly: true });
-    } else initTiles();
+    } else {
+      initTiles();
+      console.log("called from else");
+    }
 
     return () => {
       dispatchTiles({ type: "" });
@@ -356,6 +355,7 @@ export default function App() {
                   if (isError) return;
                 }
                 dispatchPage({ type: "increment" });
+                if (page === 1 && !tiles.tiles.length) initTiles();
               }}
               className="btn"
               disabled={page === 4}

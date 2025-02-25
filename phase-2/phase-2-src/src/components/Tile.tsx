@@ -10,7 +10,14 @@ export default memo(function Tile({
   id,
   pos = { x: 0, y: 0 },
 }: Tile) {
-  const { dispatchTiles, dragging, setDragging } = useContext(LayoutContext);
+  const {
+    dispatchTiles,
+    dragging,
+    setDragging,
+    tiles: { safeTiles },
+  } = useContext(LayoutContext);
+
+  const DEVMODE = true;
 
   const [image, setImage] = useState<{ img: string | null; alt: string }>({
     img: null,
@@ -149,6 +156,9 @@ export default memo(function Tile({
             {weight && ` (${weight} kg)`}
           </span>
         </>
+      )}
+      {safeTiles.some((i) => i.id === id) && "Safe" && DEVMODE && (
+        <span>Safe</span>
       )}
       {type === "wall" && <span>Wall</span>}
     </div>
