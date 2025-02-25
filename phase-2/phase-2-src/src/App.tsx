@@ -115,7 +115,7 @@ export default function App() {
     for (let x = 1; x < ROWS + 1; x++) {
       for (let y = 1; y < COLS + 1; y++) {
         if (x === 1 || x === 6 || y === 1 || y === 5) {
-          dispatchTiles({ type: "addSafe", payload: { id: `${x};${y}` } });
+          dispatchTiles({ type: "addSafe", payload: { id: `${y};${x}` } });
         }
         if (safeOnly) {
           const wallHere = checkTiles.filter(
@@ -184,10 +184,6 @@ export default function App() {
   }, [wallChanged]);
 
   useEffect(() => {
-    if (page === 2 && !tiles.tiles.length) initTiles();
-  }, [page]);
-
-  useEffect(() => {
     if (!tiles.tiles.length || !tiles.safeTiles.length) return;
     const isError = validateTiles(tiles.tiles, tiles.safeTiles);
 
@@ -240,7 +236,10 @@ export default function App() {
         });
       }
       initTiles({ checkTiles: parsed, safeOnly: true });
-    } else initTiles();
+    } else {
+      initTiles();
+      console.log("called from else");
+    }
 
     return () => {
       dispatchTiles({ type: "" });
@@ -356,6 +355,7 @@ export default function App() {
                   if (isError) return;
                 }
                 dispatchPage({ type: "increment" });
+                if (page === 1 && !tiles.tiles.length) initTiles();
               }}
               className="btn"
               disabled={page === 4}

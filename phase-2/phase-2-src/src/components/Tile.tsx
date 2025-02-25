@@ -17,6 +17,8 @@ export default memo(function Tile({
     tiles: { safeTiles },
   } = useContext(LayoutContext);
 
+  const DEVMODE = false;
+
   const [image, setImage] = useState<{ img: string | null; alt: string }>({
     img: null,
     alt: "",
@@ -155,7 +157,7 @@ export default memo(function Tile({
           </span>
         </>
       )}
-      {safeTiles.some((i) => i.id === id) && "Safe"}
+      {safeTiles.some((i) => i.id === id) && "Safe" && DEVMODE}
       {type === "wall" && <span>Wall</span>}
     </div>
   );
