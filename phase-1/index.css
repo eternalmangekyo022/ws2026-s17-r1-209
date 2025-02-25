@@ -26,6 +26,10 @@ strong {
 	scroll-behavior: smooth;
 }
 
+html {
+	overflow-x: hidden;
+}
+
 body {
 	width: 100svw;
 	height: 110svh;
@@ -1118,7 +1122,7 @@ footer .circle::before {
 		flex-direction: column;
 		height: 105svh;
 		top: 7%;
-		gap: 14%;
+		gap: max(14%, 6rem);
 	}
 
 	#how-it-works .how-showcase .card {
@@ -1170,6 +1174,7 @@ footer .circle::before {
 		flex-direction: column;
 		justify-content: start;
 		align-items: center;
+		height: 90svh;
 	}
 
 	#why-us .why-info {
@@ -1288,4 +1293,76 @@ footer .circle::before {
 		border-radius: .8rem;
 	}
 
+	#locations {
+		height: 63svh;
+		overflow-x: hidden;
+	}
+
+	.locations-cards {
+		flex-direction: row;
+		width: 100%;
+		margin-top: 5%;
+		height: 58%;
+		overflow-x: scroll;
+		justify-content: space-around;
+		gap: 0;
+		scroll-snap-type: x mandatory;
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+
+	.locations-cards::-webkit-scrollbar {
+		display: none;
+	}
+
+
+	.locations-cards .card-wrapper {
+		border-radius: .3rem;
+		width: 75%;
+		margin-left: 1rem;
+		scroll-snap-align: center;
+	}
+
+	.locations-cards .card-wrapper:last-child {
+		margin-inline: 1rem;
+	}
+
+	#locations .card-wrapper .card {
+		width: 90%;
+		height: 90%;
+	}
+
+	#locations .card .info {
+		height: 73%;
+		justify-content: start;
+		gap: 10%;
+	}
+
+	#locations .card .info dd {
+		position: relative;
+	}
+
+	#locations .card .info dd::before {
+		content: '';
+		position: absolute;
+		width: 100%;
+		height: 1px;
+		background: #cdcdcd;
+		bottom: -15px;
+	}
+
+
+	.locations-title {
+		width: 80%;
+		height: 14%;
+		margin-top: 10%;
+	}
+
+	.locations-title h1 {
+		font-size: 2.1rem;
+	}
+
+	#locations button {
+		bottom: 5%;
+	}
 }
