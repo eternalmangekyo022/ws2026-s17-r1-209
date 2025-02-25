@@ -17,7 +17,7 @@ export default memo(function Tile({
     tiles: { safeTiles },
   } = useContext(LayoutContext);
 
-  const DEVMODE = true;
+  const DEVMODE = false;
 
   const [image, setImage] = useState<{ img: string | null; alt: string }>({
     img: null,
