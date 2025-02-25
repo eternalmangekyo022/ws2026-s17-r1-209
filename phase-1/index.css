@@ -995,9 +995,6 @@ footer .circle::before {
 }
 
 @media (max-width: 496px) {
-
-
-
 	h1 {
 		font-size: 2rem;
 	}
@@ -1323,7 +1320,6 @@ footer .circle::before {
 		display: none;
 	}
 
-
 	.locations-cards .card-wrapper {
 		border-radius: .3rem;
 		width: 75%;
@@ -1454,4 +1450,40 @@ footer .circle::before {
 		padding: 0;
 	}
 
+	footer {
+		height: 33svh;
+
+	}
+
+	footer .footer-container {
+		flex-direction: column;
+		justify-content: center;
+		gap: 5%;
+	}
+
+	footer .circle {
+		display: none;
+	}
+
+	footer .lg {
+		display: none;
+	}
+
+	footer .image-container {
+		height: 28%;
+		width: 40%;
+		display: grid;
+		place-items: center;
+	}
+
+	footer .image-container img {
+		width: 100%;
+	}
+
+	footer nav {
+		width: 40%;
+		border-block: 2px solid #2a2a2a;
+		height: 40%;
+		flex-direction: column;
+	}
 }
