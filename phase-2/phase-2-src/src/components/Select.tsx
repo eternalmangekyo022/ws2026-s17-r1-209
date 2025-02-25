@@ -15,11 +15,15 @@ export default function Select() {
         value={form.openAt}
         onChange={(e) => handleOnChange(e.target.value)}
       >
-        <option value="everyday" defaultChecked>
+        <option value="everyday" defaultChecked={form.openAt === "everyday"}>
           Every Day
         </option>
-        <option value="weekdays">Weekdays</option>
-        <option value="weekend">Weekend</option>
+        <option value="weekdays" defaultChecked={form.openAt === "weekdays"}>
+          Weekdays
+        </option>
+        <option value="weekend" defaultChecked={form.openAt === "weekend"}>
+          Weekend
+        </option>
       </select>
     </div>
   );
