@@ -72,6 +72,11 @@ h3 {
 	color: var(--light-gray);
 }
 
+.sidebar,
+#sidebar-toggle {
+	display: none;
+}
+
 .nav-wrapper {
 	width: 100%;
 	height: 100%;
@@ -764,9 +769,10 @@ p.fade-in {
 	letter-spacing: -.7px;
 	font-weight: 700;
 	line-height: 3.1rem;
+	width: clamp(1rem, 100%, 20rem);
 }
 
-#download .info-container h1 p {
+#download .info-container h1 span {
 	all: inherit;
 	margin-top: 0;
 }
@@ -989,9 +995,8 @@ footer .circle::before {
 }
 
 @media (max-width: 496px) {
-	body {
-		overflow-x: hidden;
-	}
+
+
 
 	h1 {
 		font-size: 2rem;
@@ -1177,6 +1182,7 @@ footer .circle::before {
 		justify-content: start;
 		align-items: center;
 		height: 90svh;
+		overflow-x: hidden;
 	}
 
 	#why-us .why-info {
@@ -1258,6 +1264,7 @@ footer .circle::before {
 		line-height: 2.5rem;
 		text-align: center;
 		margin: 0;
+		margin-inline: auto;
 	}
 
 	#download>.info-container>h3 {
@@ -1352,7 +1359,6 @@ footer .circle::before {
 		bottom: -15px;
 	}
 
-
 	.locations-title {
 		width: 80%;
 		height: 14%;
@@ -1366,4 +1372,86 @@ footer .circle::before {
 	#locations button {
 		bottom: 5%;
 	}
+
+	#sidebar-toggle {
+		display: none;
+	}
+
+	.hamburger label {
+		cursor: pointer;
+	}
+
+	.close-icon {
+		cursor: pointer;
+	}
+
+	.sidebar {
+		display: block;
+		position: fixed;
+		top: 0;
+		right: -100%;
+		width: 85%;
+		height: 100%;
+		background: var(--primary-dark);
+		transition: right 0.3s ease;
+		z-index: 1000;
+		border-left: 1px solid #353535;
+	}
+
+	.sidebar>* {
+		width: 85%;
+		margin-inline: auto;
+	}
+
+	#sidebar-toggle:checked~.sidebar {
+		right: 0;
+	}
+
+	.overlay {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.5);
+		z-index: 999;
+	}
+
+	#sidebar-toggle:checked~.overlay {
+		display: block;
+	}
+
+	.sidebar .row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		height: 5rem;
+	}
+
+	.sidebar nav {
+		height: 25%;
+		border-block: 1px solid #2a2a2a;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: start;
+		gap: .6rem;
+	}
+
+	.sidebar .buttons {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		margin-top: 2rem;
+	}
+
+	.sidebar .buttons .btn {
+		padding-inline: 1rem;
+	}
+
+	.sidebar .buttons .btn.blue {
+		width: 75%;
+		padding: 0;
+	}
+
 }

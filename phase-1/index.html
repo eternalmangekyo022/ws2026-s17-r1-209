@@ -20,6 +20,28 @@
 </head>
 
 <body>
+	<input type="checkbox" id="sidebar-toggle">
+	<div class="sidebar">
+		<div class="row">
+			<img src="./assets/images/sudsy-logo.svg" alt="Sudsy Logo">
+			<label for="sidebar-toggle" class="close-icon">
+				<img src="./assets/images/close-icon.svg" alt="Close image">
+			</label>
+		</div>
+
+		<nav>
+			<a href="#about">About</a>
+			<a href="#how-it-works">How it Works</a>
+			<a href="#why-us">Why Sudsy</a>
+			<a href="#locations">Location</a>
+		</nav>
+
+		<div class="buttons">
+			<button class="btn blue">Log In</button>
+			<button class="btn">Download</button>
+		</div>
+	</div>
+
 	<header>
 		<div class="nav-wrapper">
 			<div class='icon-container'>
@@ -36,7 +58,9 @@
 				<button class='btn blue' aria-label="Log in to your account">Log In</button>
 			</div>
 			<div class="hamburger">
-				<img src="./assets/images/hamburger-icon.svg" alt="">
+				<label for="sidebar-toggle">
+					<img src="./assets/images/hamburger-icon.svg" alt="Menu">
+				</label>
 			</div>
 		</div>
 	</header>
