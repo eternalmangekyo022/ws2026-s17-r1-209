@@ -33,7 +33,6 @@ html {
 body {
 	width: 100svw;
 	height: 110svh;
-	overflow-x: hidden;
 }
 
 header {
@@ -991,6 +990,10 @@ footer .circle::before {
 }
 
 @media (max-width: 496px) {
+	body {
+		overflow-x: hidden;
+	}
+
 	h1 {
 		font-size: 2rem;
 	}
