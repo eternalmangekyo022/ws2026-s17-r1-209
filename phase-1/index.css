@@ -1185,7 +1185,11 @@ footer .circle::before {
 	}
 
 	#how-it-works {
-		height: max(70rem, 150svh);
+		height: max(80rem, 150svh);
+		display: flex;
+		flex-direction: column;
+		justify-content: start;
+		align-items: center;
 	}
 
 	#how-it-works .how-title {
@@ -1203,8 +1207,8 @@ footer .circle::before {
 
 	.how-showcase {
 		flex-direction: column;
-		height: 105svh;
-		top: 7%;
+		height: min(50rem, 105svh);
+		top: 12%;
 		gap: max(14%, 8rem);
 	}
 
@@ -1243,13 +1247,13 @@ footer .circle::before {
 	}
 
 	.how-buttons {
-		top: 8.2%;
+		height: 2rem;
+		top: 22.5%;
 	}
 
 	.how-buttons .btn {
 		padding: 12px 20px;
 		font-size: 15px;
-
 	}
 
 	#why-us {
