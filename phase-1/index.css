@@ -1164,4 +1164,61 @@ footer .circle::before {
 		font-size: 15px;
 
 	}
+
+	#why-us {
+		display: flex;
+		flex-direction: column;
+		justify-content: start;
+		align-items: center;
+	}
+
+	#why-us .why-info {
+		height: 25%;
+		width: 90%;
+		display: flex;
+		flex-direction: column;
+		justify-content: end;
+		align-items: center;
+	}
+
+	.why-info>* {
+		transform: unset;
+		inset: 0;
+	}
+
+	.why-info h1 {
+		font-size: 2.2rem;
+	}
+
+	.why-info h3 {
+		font-size: 1rem;
+		line-height: 1.4rem;
+	}
+
+	#why-us .why-reasons {
+		width: 95%;
+		height: 59%;
+		display: flex;
+		flex-direction: column;
+		gap: 2.6rem;
+		left: 18%;
+		bottom: -7%;
+	}
+
+	.why-reasons .why-reason {
+		gap: 15%;
+	}
+
+	.why-reasons h1 {
+		font-size: 1.3rem;
+	}
+
+	.why-reasons h3 {
+		width: 80%;
+	}
+
+	.why-reasons>.reason>.reason-image {
+		top: 60%;
+		left: -18%;
+	}
 }
